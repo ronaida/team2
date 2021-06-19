@@ -128,12 +128,28 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
         $scope.isTeamSaveSuccess = false;
     }
 
+        //hide a team save error
+    $scope.hideLinkSaveError = function() {
+            $scope.isLinkSaveError = false;
+        }
+    
+        //hide a team save success message
+    $scope.hideLinkSaveSuccess = function() {
+            $scope.isLinkSaveSuccess = false;
+        }
+    
     //hide a team save success message
     $scope.hideMessages = function() {
         $scope.hideTeamSaveError();
         $scope.hideTeamSaveSuccess(); 
     }
 
+    //hide a link save success message
+    $scope.hideLinkMessages = function() {
+        $scope.hideLinkSaveError();
+        $scope.hideLinkSaveSuccess();
+
+    }
     //delete current owned team
     $scope.deleteOwnedTeam = function() {
         if(confirm("Are you sure?")){
@@ -188,6 +204,26 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
                             }
                             $scope.teamList = teamList;
 
+                        }
+                    });
+                }
+            });
+    }
+
+    $scope.fetchInstructors_list = function(){
+        $http.get("/api/instructors",window.getAjaxOpts())
+            .then(function(response) {
+                if(response != null && response.data != null){
+                    $scope.instructorsNames = {};
+                    var instructorsList = response.data;
+                    //create a map of team names to team ids
+                    for(let instructors of instructorsList){
+                        $scope.instructorsNames[instructors.id] = instructors.name;
+                    }
+                    $http.get("/api/users",window.getAjaxOpts())
+                    .then(function(response) {
+                        if(response != null && response.data != null){
+                            $scope.instructorsList = instructorsList;
                         }
                     });
                 }
@@ -312,6 +348,85 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
     }
 
 
+    $scope.linkInstructor = function(){
+        $scope.isLinkSaveError = false;
+        $scope.isLinkSaveSuccess = false;
+        $scope.linkSaveErrorMessage = "";
+        var instructorInfo = {};
+        instructorInfo.username = $scope.instructor_username.value.trim();
+        
+        if(instructor_username===null){
+            //no team was selected show a message
+            $scope.isLinkSaveError = true;
+            $scope.linkSaveErrorMessage = "No username was selected"
+        }
+
+        //if(instructorInfo.username !== instructorInfo.existingUser){
+        //    $scope.isLinkSaveError = true;
+        //    $scope.linkSaveErrorMessage = "Instrcuctor Username NOT found";
+        //    return;
+       // }
+
+        $http.post("/api/instructor_link",{"instructorId": instructorInfo.username},window.getAjaxOpts())
+        .then(function(response) {
+            if(response !== null && response.data !== null){
+                if(response.data.status == 200){
+                    $scope.isLinkSaveSuccess = true;
+                    $scope.linkSaveSuccessMessage = "Linked to instructor successfully";
+                }
+                else{
+                    $scope.isLinkSaveError = true;
+                    $scope.linkSaveErrorMessage = response.data.statusMessage;
+                }
+
+            }
+        },function(errorResponse){
+            $scope.isLinkSaveError = true;
+            $scope.linkSaveErrorMessage = "A http error has occurred.";
+            
+        });
+/*
+        //====================================================================================================
+        $scope.hideLinkMessages();
+        if($scope.instructor_username.value == ""){
+            if($scope.instructor_username===null){
+                //no team was selected show a message
+                $scope.isLinkSaveError = true;
+                $scope.linkSaveErrorMessage = "No username was selected";
+            }
+            else{
+                var instructorId = $scope.instructor_username;
+                //update the team
+                $http.post("/api/user/team",{
+                    "teamId": instructorId
+                }, window.getAjaxOpts())
+                .then(function(response) {
+                    if(response != null && response.data != null){
+                        if(response.data.status == 200){
+                            //team id saved
+                            $scope.user.instructorId = instructorId;
+                            $scope.isTeamSaveSuccess = true;
+                            $scope.teamSaveSuccessMessage = response.data.statusMessage;
+                            //refresh the list of teams (for the leaderboard)
+                            $scope.fetchInstructors();
+                        }
+                        else{
+                            $scope.isLinkSaveError = true;
+                            $scope.teamSaveErrorMessage = response.data.statusMessage;
+                        }
+
+                    }
+                },function(errorResponse){
+                    $scope.isLinkSaveError = true;
+                    $scope.teamSaveErrorMessage = "A http error has occured.";
+                    
+                });
+            }
+        }*/
+    }
+
+
+
     $scope.loadData = function(){
         $http.get("/api/user",window.getAjaxOpts())
         .then(function(response) {
@@ -340,4 +455,23 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
     }
 
     $scope.loadData();
+
+
+    
+
+    $scope.throwConfetti = function() {
+        var duration = 15 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+        var timeLeft = animationEnd - Date.now();
+        
+        var particleCount = 50 * (timeLeft / duration);
+
+        var randomInRange = (min,max) => { Math.random() * (max - min) + min }
+        // since particles fall down, start a bit higher than random
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }
+
+
 }]);

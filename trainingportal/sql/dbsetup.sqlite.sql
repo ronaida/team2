@@ -28,6 +28,8 @@ CREATE TABLE users (
   accountId CHAR(255) NOT NULL UNIQUE,
   teamId INTEGER unsigned,
   familyName CHAR(255),
-  givenName CHAR(255)
+  givenName CHAR(255),
+  role CHAR(255),
+  instructor_UN CHAR(255)
 );
 

@@ -257,8 +257,9 @@ exports.init = async () => {
 //Creates a user in the database
 exports.insertUser = function(user,errCb,doneCb){
   var con = getConn();
-  var sql = "INSERT INTO users (id, accountId, teamId, familyName, givenName) VALUES (null, ?, null, ?, ?)";
-  con.query(sql, [user.accountId, user.familyName, user.givenName], function (err, result) {
+  var sql = "INSERT INTO users (id, accountId, teamId, familyName, givenName, role) VALUES (null, ?, ?, ?, ?, ?)";
+  
+  con.query(sql, [user.accountId, user.teamId, user.familyName, user.givenName ,user.role ], function (err, result) {
     if (err) handleErr(errCb,err);
     else handleDone(doneCb,result);
   });
@@ -388,6 +389,31 @@ exports.fetchTeams = function(errCb,doneCb){
   });
 };
 
+//fetches the list of instructors from the database
+exports.fetchInstructors = function(errCb,doneCb){
+  var con = getConn();
+  var sql = "SELECT * FROM users WHERE role='instructor' ";
+  con.query(sql, function (err, result) {
+      if(err) handleErr(errCb,err);
+      else{
+        handleDone(doneCb,result);
+    }
+  });
+};
+
+//fetches the list of students from the database
+exports.fetchStudents = function(errCb,doneCb){
+  var con = getConn();
+  var sql = "SELECT * FROM users WHERE role='students' ";
+  con.query(sql, function (err, result) {
+      if(err) handleErr(errCb,err);
+      else{
+        handleDone(doneCb,result);
+    }
+  });
+};
+
+
 //fetches a team and its members from the database by its name (unique)
 exports.getTeamWithMembersByName = function(name,errCb,doneCb){
   var con = getConn();
@@ -459,16 +485,27 @@ exports.deleteTeam = function(user,teamId,errCb,doneCb){
 /**
  * Gets a team members with completed modules
  */
-exports.getTeamMembersByBadges = async (teamId) => {
+exports.getTeamMembersByBadges = async (teamId, days) => {
   let con = getConn();
-  let sql = "SELECT badges.moduleId, users.givenName, users.familyName FROM users LEFT JOIN badges on badges.userId=users.id";
+  let sql = "SELECT badges.moduleId, badges.timestamp, users.givenName, users.familyName FROM users LEFT JOIN badges on badges.userId=users.id";
   let args = [];
-  if(teamId!==null){
+  if(teamId !== null && teamId !== "*"){
     sql+=" WHERE users.teamId = ?";
     args = [teamId];
   }
   sql+=" order by badges.moduleId, users.givenName, users.familyName";
   let result = await con.queryPromise(sql,args);
+
+  if(days){
+    let now = new Date();
+    now.setDate(now.getDate()-days);
+    let ts = now.getTime();
+    result = result.filter(record => {
+      if(!record.timestamp) return false;
+      let recordTs = new Date(record.timestamp).getTime();
+      return recordTs > ts;
+    });
+  }
   return result;
 };
 
@@ -610,14 +647,22 @@ exports.getModuleStats = async () => {
 exports.getTeamStats= async (limit) => {
   var con = getConn();
 
+  let result = await con.queryPromise("select * from users");
+  const allPlayerCount = result.length;
+
   var sql = "SELECT teams.id as id, teams.name as teamName, count(users.id) as playerCount from teams INNER JOIN users on users.teamId=teams.id group by teams.id order by playerCount desc";
   var args = [];
+
   if(limit!==null){
     sql+=" limit ?";
     args=[limit];
   }
   
-  return await con.queryPromise(sql, args);
+  result = await con.queryPromise(sql, args);
+
+  result.splice(0,0,{id:"*", teamName: "All Teams", playerCount: allPlayerCount});
+
+  return result;
   
 };
 

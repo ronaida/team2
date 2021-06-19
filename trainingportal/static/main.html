@@ -9,6 +9,8 @@
 <script src="public/angular-route/angular-route.min.js"></script>
 <script src="public/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="public/highlightjs/highlight.pack.min.js"></script>
+<script src="public/canvas-confetti/dist/confetti.browser.js"></script>
+
 
 <script src="static/main-app.js"></script>
 <script src="static/dataSvc.js"></script>
@@ -25,7 +27,7 @@
 
 <link href="/public/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="/public/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
-<link href="public/highlightjs/styles/darkula.css" rel="stylesheet">
+<link href="/public/highlightjs/styles/darkula.css" rel="stylesheet">
 
 <script>
     window.localStorage.setItem('XSRF_TOKEN','%XSRF_TOKEN%');
@@ -45,7 +47,7 @@
 
     <div ng-app="challengesApp" ng-controller="mainCtrl">
         
-        <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
             <a class="navbar-brand" href="#!">Secure Coding Dojo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -54,13 +56,14 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="navbar-item" ng-class="{ active: isActive('/')}"><a class="nav-link" href="#!">Lessons</a></li>
                     <li class="navbar-item" ng-class="{ active: isActive('/codeBlocks')}"><a class="nav-link" href="#!codeBlocks/inputAllowListing">Code Blocks</a></li>
-                    <li class="navbar-item" ng-class="{ active: isActive('/leaderboard')}"><a class="nav-link" href="#!leaderboard">Leaderboard</a></li>
+                    <li class="navbar-item" ng-class="{ active: isActive('/leaderboard')}"><a class="nav-link" href="#!leaderboard">Team Results</a></li>
                     <li class="navbar-item" ng-class="{ active: isActive('/activity')}"><a class="nav-link" href="#!activity">Activity</a></li>
                     <li class="navbar-item" ng-class="{ active: isActive('/dashboard')}"><a class="nav-link"href="#!dashboard">Dashboard</a></li>
                     <li class="navbar-item" ng-class="{ active: isActive('/report')}"><a class="nav-link" href="#!report">Report</a></li>
                 </ul>
             
                 <ul class="navbar-nav">
+                    <li class="navbar-item"><a class="nav-link" href="" data-toggle="modal" data-target="#link_instructor">Link Instructor</a></li>
                     <li class="navbar-item"><a class="nav-link" href="" data-toggle="modal" data-target="#teamModal">My Team</a></li>
                     <li class="navbar-item" ng-if="user.accountId.indexOf('Local_')===0"><a class="nav-link" href="" data-toggle="modal" data-target="#profileModal">My Profile</a></li>
                     <li class="navbar-item"><a class="nav-link" href="/logout"><span class="oi oi-account-logout"></span> Logout {{fullName}}</a></li>
@@ -181,6 +184,42 @@
                         <div class="modal-footer">
                             
                             <button type="button" class="btn btn-primary" ng-click="updateLocalUser()">Save</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- instructor configuration -->
+             <div id="link_instructor" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- instructor configuration UI -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Link Instructor</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="instructor_username">Instructor Username:</label>
+                                <input type="text" class="form-control" id="instructor_username">
+                            </div>                         
+                        </div>
+                        <div class="alert alert-danger" id="linkErrorMessage" ng-if="isLinkSaveError">
+                                <button type="button" class="close" ng-click="hideLinkSaveError()">&times;</button>
+                                {{linkSaveErrorMessage}}
+                        </div>
+                        <div class="alert alert-success" id="linkSuccessMessage" ng-if="isLinkSaveSuccess">
+                                <button type="button" class="close" ng-click="hideLinkSaveSuccess()">&times;</button>
+                                {{linkSaveSuccessMessage}}
+                        </div>
+                        <div class="modal-footer">
+                            
+                          <!--   <button type="button" class="btn btn-primary" ng-click="linkInstructor()">Link</button> -->
+                            <button type="button" class="btn btn-primary" ng-click="linkInstructor()">Link</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
