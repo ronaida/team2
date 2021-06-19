@@ -1,12 +1,9 @@
 app.controller("leaderboardCtrl", function($scope, $http) {
     
-    $scope.teamListTimeRange = "-1";
 
-    $scope.displayTeam = (team, range) => {
-        let url = `/api/teams/${team.id}/badges`;
-        if(range!=="-1") url+=`?days=${range}`;
-
-        $http.get(url,window.getAjaxOpts())
+    $scope.displayTeam = (team) => {
+        
+        $http.get(`/api/teams/${team.id}/badges`,window.getAjaxOpts())
         .then(function(response) {
             if(response !== null && response.data !== null){
                 let teamMembers = response.data;
@@ -17,7 +14,7 @@ app.controller("leaderboardCtrl", function($scope, $http) {
                 
                 for(let user of teamMembers){
                     if(user.moduleId===null){
-                        continue;
+                        user.moduleId = "none";
                     }
                     for(let moduleId in lbModules){
                         if(moduleId===user.moduleId){
@@ -42,9 +39,9 @@ app.controller("leaderboardCtrl", function($scope, $http) {
     $scope.onTeamChange = function() {
         if($scope.teamStatList!==null){
             let selection = $scope.teamStatList[$scope.teamListChoice];
-            let range = $scope.teamListTimeRange;
             if(typeof selection !== "undefined"){
-                $scope.displayTeam(selection, range);
+                $scope.teamListChoice = `${selection.teamName} (${selection.playerCount})`;
+                $scope.displayTeam(selection);
             }
         }
     }
@@ -59,7 +56,7 @@ app.controller("leaderboardCtrl", function($scope, $http) {
                 for(let index = 0; index < $scope.teamStatList.length; index++){
                     let team = $scope.teamStatList[index];
                     if(team.id === $scope.user.teamId){
-                        $scope.teamListChoice = index+"";
+                        $scope.teamListChoice = index;
                         $scope.onTeamChange();
                         break;
                     }

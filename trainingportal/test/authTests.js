@@ -38,7 +38,7 @@ describe('authTests', () => {
 
             config.defaultTeam = null;
             var promise = new Promise((resolve,reject)=>{
-                auth.processAuthCallback("authTestUser","Auth Test","User","authtestuser@email.local", (e, u) => {
+                auth.processAuthCallback("authTestUser","Auth Test","User","authtestuser@email.local","student", (e, u) => {
                     resolve(u);
                 });
             });
@@ -54,7 +54,7 @@ describe('authTests', () => {
             await db.getConn().queryPromise("DELETE FROM users WHERE accountId = ?",["authTestUser"]);
             config.defaultTeam = "authTestTeam";
             var promise = new Promise((resolve,reject)=>{
-                auth.processAuthCallback("authTestUser","Auth Test","User","authtestuser@email.local", (e, u) => {
+                auth.processAuthCallback("authTestUser","Auth Test","User","authtestuser@email.local","student", (e, u) => {
                     resolve(u);
                 });
             });
@@ -70,7 +70,7 @@ describe('authTests', () => {
             await db.getConn().queryPromise("DELETE FROM users WHERE accountId = ?",["authTestUser"]);
             config.defaultTeam = "someOtherTeam";
             var promise = new Promise((resolve,reject)=>{
-                auth.processAuthCallback("authTestTeamOwner","Team","Owner","teamowner@email.local", (e, u) => {
+                auth.processAuthCallback("authTestTeamOwner","Team","Owner","teamowner@email.local","student", (e, u) => {
                     resolve(u);
                 });
             });
@@ -84,7 +84,7 @@ describe('authTests', () => {
 
         it('should reject a profileId if is not allowed', async () => {
             var promise = new Promise((resolve,reject)=>{
-                auth.processAuthCallback("userNotMatchingAllowedPattern","A","B","c@email.local", (e, u) => {
+                auth.processAuthCallback("userNotMatchingAllowedPattern","A","B","c@email.local","student", (e, u) => {
                     resolve(e);
                 });
             });

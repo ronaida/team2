@@ -2,7 +2,6 @@ const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
 const markdown = require('markdown').markdown;
-var config = null;
 
 exports.getDataDir = () => {
   let dataDir = process.env.DATA_DIR;
@@ -13,21 +12,18 @@ exports.getDataDir = () => {
 }
 
 exports.getConfig = () => {
-  if(!config){
-    let dataDir = exports.getDataDir();
-    let configPath = path.join(dataDir, 'config.json');
+  let dataDir = exports.getDataDir();
+  let configPath = path.join(dataDir, 'config.json');
+  if(!fs.existsSync(configPath)){
+    console.warn(`WARNING: Config file not found at ${configPath}. Trying default file.`);
+    configPath = path.join(__dirname, 'config.json');
     if(!fs.existsSync(configPath)){
-      console.warn(`WARNING: Config file not found at ${configPath}. Trying default file.`);
-      configPath = path.join(__dirname, 'config.json');
-      if(!fs.existsSync(configPath)){
-        //if still doesn't exist exit
-        console.error(`ERROR: Config file not found.`);
-        process.exit(1);
-      }
+      //if still doesn't exist exit
+      console.error(`ERROR: Config file not found.`);
+      process.exit(1);
     }
-    config = require(configPath);
   }
-  return config;
+  return require(configPath);
 }
 
 exports.hasKey = function(){

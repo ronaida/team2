@@ -7,5 +7,4 @@ localUsers.json
 allowedAccounts.json
 .ebextensions
 *.db
-*.npm
 runCustomTestScripts.sh
