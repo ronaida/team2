@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/asim97/SecureCodingDojo_DEBI/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/asim97/SecureCodingDojo_DEBI/actions/workflows/codeql-analysis.yml)
+
 # About the Secure Coding Dojo
 The Secure Coding Dojo is a platform for delivering secure coding training. 
 While it comes with its own vulnerable training application (the Insecure.Inc website) the training portal can be used in conjunction with other  training applications.
