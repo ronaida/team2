@@ -179,6 +179,7 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
         }
     }
 
+
     $scope.fetchTeams = function(){
         $http.get("/api/teams",window.getAjaxOpts())
             .then(function(response) {
@@ -210,26 +211,7 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
             });
     }
 
-    $scope.fetchInstructors_list = function(){
-        $http.get("/api/instructors",window.getAjaxOpts())
-            .then(function(response) {
-                if(response != null && response.data != null){
-                    $scope.instructorsNames = {};
-                    var instructorsList = response.data;
-                    //create a map of team names to team ids
-                    for(let instructors of instructorsList){
-                        $scope.instructorsNames[instructors.id] = instructors.name;
-                    }
-                    $http.get("/api/users",window.getAjaxOpts())
-                    .then(function(response) {
-                        if(response != null && response.data != null){
-                            $scope.instructorsList = instructorsList;
-                        }
-                    });
-                }
-            });
-    }
-
+   
     $scope.onUserTeamChange = function(){
         if($scope.teamList!==null && typeof userTeamListChoice !== "undefined" && userTeamListChoice.value!==""){
             let index = parseInt(userTeamListChoice.value,10);
@@ -352,13 +334,12 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
         $scope.isLinkSaveError = false;
         $scope.isLinkSaveSuccess = false;
         $scope.linkSaveErrorMessage = "";
-        var instructorInfo = {};
-        instructorInfo.username = $scope.instructor_username.value.trim();
+        instructorInfo_username = instructor_username.value;
         
-        if(instructor_username===null){
+        if(instructor_username==""){
             //no team was selected show a message
             $scope.isLinkSaveError = true;
-            $scope.linkSaveErrorMessage = "No username was selected"
+            $scope.linkSaveErrorMessage = "No username was entered"
         }
 
         //if(instructorInfo.username !== instructorInfo.existingUser){
@@ -367,12 +348,12 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
         //    return;
        // }
 
-        $http.post("/api/instructor_link",{"instructorId": instructorInfo.username},window.getAjaxOpts())
+        $http.post("/api/instructor_link",{"instructorId": instructorInfo_username},window.getAjaxOpts())
         .then(function(response) {
             if(response !== null && response.data !== null){
                 if(response.data.status == 200){
                     $scope.isLinkSaveSuccess = true;
-                    $scope.linkSaveSuccessMessage = "Linked to instructor successfully";
+                    $scope.linkSaveSuccessMessage = "Linked successfully.";
                 }
                 else{
                     $scope.isLinkSaveError = true;
@@ -385,44 +366,6 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
             $scope.linkSaveErrorMessage = "A http error has occurred.";
             
         });
-/*
-        //====================================================================================================
-        $scope.hideLinkMessages();
-        if($scope.instructor_username.value == ""){
-            if($scope.instructor_username===null){
-                //no team was selected show a message
-                $scope.isLinkSaveError = true;
-                $scope.linkSaveErrorMessage = "No username was selected";
-            }
-            else{
-                var instructorId = $scope.instructor_username;
-                //update the team
-                $http.post("/api/user/team",{
-                    "teamId": instructorId
-                }, window.getAjaxOpts())
-                .then(function(response) {
-                    if(response != null && response.data != null){
-                        if(response.data.status == 200){
-                            //team id saved
-                            $scope.user.instructorId = instructorId;
-                            $scope.isTeamSaveSuccess = true;
-                            $scope.teamSaveSuccessMessage = response.data.statusMessage;
-                            //refresh the list of teams (for the leaderboard)
-                            $scope.fetchInstructors();
-                        }
-                        else{
-                            $scope.isLinkSaveError = true;
-                            $scope.teamSaveErrorMessage = response.data.statusMessage;
-                        }
-
-                    }
-                },function(errorResponse){
-                    $scope.isLinkSaveError = true;
-                    $scope.teamSaveErrorMessage = "A http error has occured.";
-                    
-                });
-            }
-        }*/
     }
 
 

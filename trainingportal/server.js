@@ -33,6 +33,8 @@ const challenges = require(path.join(__dirname, 'challenges'));
 const report = require(path.join(__dirname, 'report'));
 var mainHtml = fs.readFileSync(path.join(__dirname, 'static/main.html'),'utf8');
 var mainHtml_instructor = fs.readFileSync(path.join(__dirname, 'static/main_instructor.html'),'utf8');
+var forbidden_html = fs.readFileSync(path.join(__dirname, 'static/forbidden.html'),'utf8');
+
 
 const badge = require(path.join(__dirname, 'badge'));
 var badgeHtml = fs.readFileSync(path.join(__dirname, 'static/badge.html'),'utf8');
@@ -172,14 +174,21 @@ app.post('/public/locallogin', [
   passport.authenticate('local', { failureRedirect: '/public/authFail.html' })
 ],
 function(req, res) {
-	db.getUserByIdd( "Local_" + req.body.username, null, async (role) => {
-    if(user){
-        res.redirect(handleUserNavigation(user));
-
+  var instructor_found=0;
+  //if instructor --> redirect to his dashboard
+  db.fetchInstructors(null, function(users){  
+    for (let i = 0; i < users.length; i++) {
+      if ("Local_"+ req.body.username===users[i].accountId)
+      {      
+        //redirect to instructor dashboard 
+        res.redirect('/main_instructor');
+        instructor_found=1;
+      }
     }
-    
-    });							   
-  //res.redirect('/main');
+    //redirect to student dashboard 
+    if(instructor_found==0)
+      res.redirect('/main');
+  });						   
 });
 
 app.post('/public/ldaplogin', passport.authenticate('ldapauth', { failureRedirect: '/public/authFail.html' }),
@@ -232,14 +241,23 @@ app.get('/logout', auth.logout);
 
 app.get('/main', (req, res) => {
   
-  let updatedHtml = auth.addCsrfToken(req, mainHtml_instructor);
-  updatedHtml = auth.addCsrfToken(req, mainHtml);
-
-  res.send(updatedHtml);
+  if(req.user.role=="student"){
+    let updatedHtml = auth.addCsrfToken(req, mainHtml);
+    res.send(updatedHtml);
+  }
+  else
+    res.send(forbidden_html);
+  ;
 });
 
 app.get('/main_instructor', (req, res) => {
- 
+  if(req.user.role=="instructor"){
+    let updatedHtml = auth.addCsrfToken(req, mainHtml_instructor);
+    res.send(updatedHtml);
+  }
+  else
+    res.send(forbidden_html);
+  ;
 });
 
 app.get('/challenges/:moduleId', async (req, res) => {
@@ -532,30 +550,28 @@ app.post('/api/teams', auth.ensureApiAuth, (req, res) => {
       });
 });
 
-//creates a team setting the current user as owner of the team
+//creates a eam setting the current user as owner of the team
 app.post('/api/instructor_link', auth.ensureApiAuth, (req, res) => {
   var instructorUsername = req.body.instructorId;
+  var user=req.user;
+  user.instructor_UN=instructorUsername
 
   if(util.isNullOrUndefined(instructorUsername) || validator.matches(instructorUsername,/^[a-z0-9\s_'\-]+$/i)==false){
-     return util.apiResponse(req, res, 400, "Team name must be alphanumeric or name punctuation.");
+     return util.apiResponse(req, res, 400, "Instructor user name must be alphanumeric or name punctuation.");
   }
-
-  db.insertTeam(req.user,{name:instructorUsername}, 
-     function(){
-       util.apiResponse(req, res, 500, "Failed to create team, Check the logs.");
-     }, 
-     function(){
-       //team was created get the newly created team by name and return it in the response also update the user
-       db.getTeamWithMembersByName(instructorUsername,
-         function(){
-           util.apiResponse(req, res, 500, "An error occured fetching the newly created team, Check the logs.");
-         },
-         function(team){
-           req.user.teamId = team.id;
-           util.log("User created team "+instructorUsername, req.user);
-           util.apiResponse(req, res, 200, "Team created.", team);
-         });
-     });
+  //check if exist and is instructor
+  db.fetchInstructors(null, function(users){  
+    for (let i = 0; i < users.length; i++) {
+      if ("Local_"+instructorUsername===users[i].accountId)
+      {      
+        //link the student to the instructor
+        db.getPromise(db.linkInstructorUserName,user);
+        return util.apiResponse(req, res, 200, "Instructor Linked.");   
+      }
+    }
+    //username not found
+    return util.apiResponse(req, res, 400, "User Name NOT FOUND.");
+  });
 });
 
 

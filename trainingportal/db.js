@@ -265,6 +265,17 @@ exports.insertUser = function(user,errCb,doneCb){
   });
 };
 
+//Creates a user in the database
+exports.linkInstructorUserName = function(user,errCb,doneCb){
+  var con = getConn();
+  var sql = "UPDATE users SET accountId = ?, teamId = ?, familyName = ?, givenName = ?,instructor_UN = ? WHERE id = ?";
+  con.query(sql, [user.accountId, user.teamId, user.familyName, user.givenName, user.instructor_UN, user.id], function (err, result) {
+    if (err) handleErr(errCb,err);
+    else handleDone(doneCb,result);
+  });
+ 
+};
+
 //gets the database schema version
 exports.getVersion = function(errCb,doneCb){
   var con = getConn();
@@ -310,14 +321,17 @@ exports.deleteUser = function(accountId,errCb,doneCb){
     else handleDone(doneCb,result);
   });
 };
-exports.getUserRole = function(accountId,errCb,doneCb){
+
+exports.getUserByIdd = function(accountId,errCb,doneCb){
   var con = getConn();
   var sql = "select * FROM users WHERE accountId = ? ";
   con.query(sql, [accountId], function (err, result) {
     if(err) handleErr(errCb,err);
     else handleDone(doneCb,result);
   });
-};					  
+};
+
+					  
 
 //updates the properties of a user in the database
 exports.updateUser = function(user,errCb,doneCb){
@@ -412,7 +426,7 @@ exports.fetchInstructors = function(errCb,doneCb){
 //fetches the list of students from the database
 exports.fetchStudents = function(errCb,doneCb){
   var con = getConn();
-  var sql = "SELECT * FROM users WHERE role='students' ";
+  var sql = "SELECT * FROM users WHERE role='student' ";
   con.query(sql, function (err, result) {
       if(err) handleErr(errCb,err);
       else{

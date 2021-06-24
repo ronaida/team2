@@ -312,6 +312,7 @@ let processAuthCallback = async(profileId, givenName, familyName, email, role, c
                 givenName: givenName,
                 teamId: teamId,
                 role:role,
+                instructor_UN:null,
                 level:0
             };
             await db.getPromise(db.insertUser, user);

@@ -157,7 +157,18 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                        
+                            <div class="form-group">
+                                    <label for="currentusernn">Username :   </label> 
+                                {{user.accountId.replace('Local_', '')}}
+                            </div>
+                            <div class="form-group">
+                                    <label for="currentPassword">My Role  :   </label> 
+                                {{user.role}}
+                            </div>
+                            <div class="form-group">
+                                    <label for="currentPassword">Instructor :   {{user.instructor_UN}} </label> 
+                                
+                            </div>
                             <div class="form-group">
                                 <label for="currentPassword">Current Password:</label>
                                 <input type="password" class="form-control" id="currentPassword" autocomplete="off" >
@@ -204,7 +215,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="instructor_username">Instructor Username:</label>
+                                <label >Instructor Username:</label>
                                 <input type="text" class="form-control" id="instructor_username">
                             </div>                         
                         </div>
