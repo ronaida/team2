@@ -257,7 +257,7 @@ exports.init = async () => {
 //Creates a user in the database
 exports.insertUser = function(user,errCb,doneCb){
   var con = getConn();
-  var sql = "INSERT INTO users (id, accountId, teamId, familyName, givenName, role) VALUES (null, ?, ?, ?, ?, ?)";
+  var sql = "INSERT INTO users (id, accountId, teamId, familyName, givenName, role,instructor_UN) VALUES (null, ?, ?, ?, ?, ?, null)";
   
   con.query(sql, [user.accountId, user.teamId, user.familyName, user.givenName ,user.role ], function (err, result) {
     if (err) handleErr(errCb,err);
@@ -310,6 +310,14 @@ exports.deleteUser = function(accountId,errCb,doneCb){
     else handleDone(doneCb,result);
   });
 };
+exports.getUserRole = function(accountId,errCb,doneCb){
+  var con = getConn();
+  var sql = "select * FROM users WHERE accountId = ? ";
+  con.query(sql, [accountId], function (err, result) {
+    if(err) handleErr(errCb,err);
+    else handleDone(doneCb,result);
+  });
+};					  
 
 //updates the properties of a user in the database
 exports.updateUser = function(user,errCb,doneCb){

@@ -172,7 +172,14 @@ app.post('/public/locallogin', [
   passport.authenticate('local', { failureRedirect: '/public/authFail.html' })
 ],
 function(req, res) {
-  res.redirect('/main');
+	db.getUserByIdd( "Local_" + req.body.username, null, async (role) => {
+    if(user){
+        res.redirect(handleUserNavigation(user));
+
+    }
+    
+    });							   
+  //res.redirect('/main');
 });
 
 app.post('/public/ldaplogin', passport.authenticate('ldapauth', { failureRedirect: '/public/authFail.html' }),
