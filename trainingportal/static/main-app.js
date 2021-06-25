@@ -179,7 +179,6 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
         }
     }
 
-
     $scope.fetchTeams = function(){
         $http.get("/api/teams",window.getAjaxOpts())
             .then(function(response) {
@@ -341,13 +340,6 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
             $scope.isLinkSaveError = true;
             $scope.linkSaveErrorMessage = "No username was entered"
         }
-
-        //if(instructorInfo.username !== instructorInfo.existingUser){
-        //    $scope.isLinkSaveError = true;
-        //    $scope.linkSaveErrorMessage = "Instrcuctor Username NOT found";
-        //    return;
-       // }
-
         $http.post("/api/instructor_link",{"instructorId": instructorInfo_username},window.getAjaxOpts())
         .then(function(response) {
             if(response !== null && response.data !== null){
@@ -397,10 +389,18 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
         });
     }
 
-    $scope.loadData();
-
-
-    
+    $scope.fetchMyStudents = function(){
+        var filter = "";
+        if(typeof nameFilter !== 'undefined'){
+            filter=nameFilter.value;
+        }
+        $http.get("/api/students?query="+filter,window.getAjaxOpts())
+            .then(function(response) {
+                if(response != null && response.data != null){
+                    $scope.activityList = response.data;
+                }
+            })
+    }
 
     $scope.throwConfetti = function() {
         var duration = 15 * 1000;
