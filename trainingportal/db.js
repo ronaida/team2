@@ -625,7 +625,39 @@ exports.fetchChallengeEntriesForUser = function(user,errCb,doneCb){
  * @param {*} errCb 
  * @param {*} doneCb 
  */
-exports.fetchActivity = function(query,limit,errCb,doneCb){
+exports.fetchMystudents = function(query,limit,errCb,doneCb){
+  var con = getConn();
+  var sql = "";
+  var args = [];
+  if(!util.isNullOrEmpty(query)){
+    //var con = getConn();
+    //var sql = "SELECT * FROM users WHERE role='student' ";
+    //con.query(sql, function (err, result) {
+     //   if(err) 
+     //     handleErr(errCb,err);
+       // else{
+         // handleDone(doneCb,result);
+      //}
+    //});
+  }
+  else{
+    sql = "SELECT * FROM users WHERE role='student' and instructor_UN = ?";
+    args = [query];
+  }
+  con.query(sql, args, function (err, result) {
+    if(err) handleErr(errCb,err);
+    else{
+      handleDone(doneCb,result);
+    }
+  });
+};
+
+/**
+ * Fetches the list of challenge entries in descending order, practically the activity
+ * @param {*} errCb 
+ * @param {*} doneCb 
+ */
+ exports.fetchActivity = function(query,limit,errCb,doneCb){
   var con = getConn();
   var sql = "";
   var args = [];

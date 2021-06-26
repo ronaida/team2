@@ -307,7 +307,7 @@ app.get('/challenges/solutions/:challengeId', (req,res) => {
   if(util.isNullOrUndefined(challengeId) || util.isAlphanumericOrUnderscore(challengeId) === false){
     return util.apiResponse(req, res, 400, "Invalid challenge id."); 
   }
-  
+
   db.checkUserSolutionDisabled(req.user,
     function(){
       util.apiResponse(req, res, 500, "Failed to check if solutions are enabled for this user");
@@ -495,6 +495,19 @@ app.get('/api/activity',  (req, res) => {
   });
 });
 
+//get instructor students linked with
+app.get('/api/students',  (req, res) => {
+  var query = req.query.query;
+  if(util.isNullOrUndefined(query)) query = "";
+  query = query.trim();
+  if(query !== "" && !validator.matches(query,/^[A-Z'\-\s]+$/i)){
+    return util.apiResponse(req,res,400,"Invalid query");
+  }
+  
+  db.fetchMystudents(query,100,null,function(activityList){
+    res.send(activityList);
+  });
+});
 
 //get the activity
 app.get('/api/activity/heartbeat',  (req, res) => {
