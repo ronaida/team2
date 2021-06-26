@@ -41,6 +41,8 @@ CREATE TABLE `users` (
   `givenName` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL COMMENT 'this will detrmine of the role of the user',
   `instructor_UN` varchar(255) DEFAULT NULL COMMENT 'this will save the username of the instructor',
+  `max_progress` varchar(255) DEFAULT NULL COMMENT 'this will detrmine of the max progress of the user',
+  `solution_disabled` varchar(255) DEFAULT NULL COMMENT 'this will detrmine if the solutions disabled for the user',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `account_name_UNIQUE` (`accountId`)

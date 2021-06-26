@@ -34,6 +34,7 @@ const report = require(path.join(__dirname, 'report'));
 var mainHtml = fs.readFileSync(path.join(__dirname, 'static/main.html'),'utf8');
 var mainHtml_instructor = fs.readFileSync(path.join(__dirname, 'static/main_instructor.html'),'utf8');
 var forbidden_html = fs.readFileSync(path.join(__dirname, 'static/forbidden.html'),'utf8');
+var sol_disabled_html = fs.readFileSync(path.join(__dirname, 'static/sol_disabled.html'),'utf8');
 
 
 const badge = require(path.join(__dirname, 'badge'));
@@ -240,7 +241,7 @@ app.get("/public/badge/:code/image.png",async(req,res) => {
 app.get('/logout', auth.logout);
 
 app.get('/main', (req, res) => {
-  
+
   if(req.user.role=="student"){
     let updatedHtml = auth.addCsrfToken(req, mainHtml);
     res.send(updatedHtml);
@@ -306,7 +307,7 @@ app.get('/challenges/solutions/:challengeId', (req,res) => {
   if(util.isNullOrUndefined(challengeId) || util.isAlphanumericOrUnderscore(challengeId) === false){
     return util.apiResponse(req, res, 400, "Invalid challenge id."); 
   }
-  
+
   db.checkUserSolutionDisabled(req.user,
     function(){
       util.apiResponse(req, res, 500, "Failed to check if solutions are enabled for this user");
@@ -324,8 +325,6 @@ app.get('/challenges/solutions/:challengeId', (req,res) => {
       }
     }
   );
-  var solutionHtml = challenges.getSolution(challengeId);
-  res.send(solutionHtml);
 });
 
 
@@ -496,6 +495,19 @@ app.get('/api/activity',  (req, res) => {
   });
 });
 
+//get instructor students linked with
+app.get('/api/students',  (req, res) => {
+  var query = req.query.query;
+  if(util.isNullOrUndefined(query)) query = "";
+  query = query.trim();
+  if(query !== "" && !validator.matches(query,/^[A-Z'\-\s]+$/i)){
+    return util.apiResponse(req,res,400,"Invalid query");
+  }
+  
+  db.fetchMystudents(query,100,null,function(activityList){
+    res.send(activityList);
+  });
+});
 
 //get the activity
 app.get('/api/activity/heartbeat',  (req, res) => {

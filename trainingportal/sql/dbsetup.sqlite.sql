@@ -30,6 +30,8 @@ CREATE TABLE users (
   familyName CHAR(255),
   givenName CHAR(255),
   role CHAR(255),
-  instructor_UN CHAR(255)
+  instructor_UN CHAR(255),
+  max_progress CHAR(255),
+  solution_disabled CHAR(255)
 );
 
