@@ -179,6 +179,7 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
         }
     }
 
+
     $scope.fetchTeams = function(){
         $http.get("/api/teams",window.getAjaxOpts())
             .then(function(response) {
@@ -340,6 +341,13 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
             $scope.isLinkSaveError = true;
             $scope.linkSaveErrorMessage = "No username was entered"
         }
+
+        //if(instructorInfo.username !== instructorInfo.existingUser){
+        //    $scope.isLinkSaveError = true;
+        //    $scope.linkSaveErrorMessage = "Instrcuctor Username NOT found";
+        //    return;
+       // }
+
         $http.post("/api/instructor_link",{"instructorId": instructorInfo_username},window.getAjaxOpts())
         .then(function(response) {
             if(response !== null && response.data !== null){
@@ -389,6 +397,7 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
         });
     }
 
+<<<<<<< HEAD
     $scope.fetchMyStudents = function(){
         var filter = "";
         if(typeof nameFilter !== 'undefined'){
@@ -401,6 +410,12 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
                 }
             })
     }
+=======
+    $scope.loadData();
+
+
+    
+>>>>>>> parent of 80ed725 (adding more functions and fixed some)
 
     $scope.throwConfetti = function() {
         var duration = 15 * 1000;
