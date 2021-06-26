@@ -33,6 +33,9 @@ app.config(function($routeProvider) {
     }).when("/solution/:challengeId", {
         templateUrl : "static/solution.html",
         controller: "solutionCtrl"
+    }).when("/students", {
+        templateUrl : "static/students.html",
+        controller: "studentsCtrl"
     });
 });
 
@@ -401,22 +404,7 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
                 }
             })
     }
-    
+
     $scope.loadData();
-
-    $scope.throwConfetti = function() {
-        var duration = 15 * 1000;
-        var animationEnd = Date.now() + duration;
-        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-        var timeLeft = animationEnd - Date.now();
-        
-        var particleCount = 50 * (timeLeft / duration);
-
-        var randomInRange = (min,max) => { Math.random() * (max - min) + min }
-        // since particles fall down, start a bit higher than random
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-    }
-
 
 }]);

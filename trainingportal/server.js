@@ -504,8 +504,8 @@ app.get('/api/students',  (req, res) => {
     return util.apiResponse(req,res,400,"Invalid query");
   }
   
-  db.fetchMystudents(query,100,null,function(activityList){
-    res.send(activityList);
+  db.fetchMystudents(query,100,null,function(studentsList){
+    res.send(studentsList);
   });
 });
 
@@ -600,7 +600,7 @@ app.post('/api/instructor_link', auth.ensureApiAuth, (req, res) => {
       }
     }
     //username not found
-    return util.apiResponse(req, res, 400, "User Name NOT FOUND.");
+    return util.apiResponse(req, res, 400, "Instructor Username NOT FOUND.");
   });
 });
 
