@@ -129,17 +129,6 @@ exports.getUserLevelForModule = async (user,moduleId) => {
     let moduleDefinitions = getDefinifionsForModule(moduleId);
     let passedChallenges =  await db.getPromise(db.fetchChallengeEntriesForUser,user);
     let userLevel=-1;
-    var max_allowed_level =  await db.getPromise(db.checkUserMaxProgress,user);
-    //console.log(parseInt(max_allowed_level[0].max_progress,10));
-    var max_allowed_level_int = parseInt(max_allowed_level[0].max_progress,10);
-    //if  (max_allowed_level_int == permittedLevel)
-    //console.log("================== called here============")
-    //console.log("passedChallenges"+passedChallenges.challengeId);
-    if (moduleId=='blackBelt'){
-       // console.log("moduleId"+moduleId);
-        return (max_allowed_level_int-1);
-    }
-    //console.log("module def"+moduleDefinitions);
     for(let level of moduleDefinitions){
         let passCount = 0;
         for(let chDef of level.challenges) {
@@ -149,20 +138,13 @@ exports.getUserLevelForModule = async (user,moduleId) => {
                 }
             }
         }
-       // console.log(level.challenges);
-
         if(passCount===level.challenges.length){
-           // console.log("level.challenges"+level.level)
             userLevel = level.level;
         }
         else{
             break;
         }
-        //console.log("=================== for ")
-        //console.log(userLevel);
     }
-    //console.log("===================")
-    //console.log(userLevel);
     return userLevel;
 }
 

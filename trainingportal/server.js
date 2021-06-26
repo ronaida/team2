@@ -34,7 +34,6 @@ const report = require(path.join(__dirname, 'report'));
 var mainHtml = fs.readFileSync(path.join(__dirname, 'static/main.html'),'utf8');
 var mainHtml_instructor = fs.readFileSync(path.join(__dirname, 'static/main_instructor.html'),'utf8');
 var forbidden_html = fs.readFileSync(path.join(__dirname, 'static/forbidden.html'),'utf8');
-var sol_disabled_html = fs.readFileSync(path.join(__dirname, 'static/sol_disabled.html'),'utf8');
 
 
 const badge = require(path.join(__dirname, 'badge'));
@@ -241,7 +240,7 @@ app.get("/public/badge/:code/image.png",async(req,res) => {
 app.get('/logout', auth.logout);
 
 app.get('/main', (req, res) => {
-
+  
   if(req.user.role=="student"){
     let updatedHtml = auth.addCsrfToken(req, mainHtml);
     res.send(updatedHtml);
@@ -325,6 +324,8 @@ app.get('/challenges/solutions/:challengeId', (req,res) => {
       }
     }
   );
+  var solutionHtml = challenges.getSolution(challengeId);
+  res.send(solutionHtml);
 });
 
 

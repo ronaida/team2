@@ -257,9 +257,9 @@ exports.init = async () => {
 //Creates a user in the database
 exports.insertUser = function(user,errCb,doneCb){
   var con = getConn();
-  var sql = "INSERT INTO users (id, accountId, teamId, familyName, givenName, role, instructor_UN, max_progress, solution_disabled) VALUES (null, ?, ?, ?, ?, ?, null, ?, ?)";
+  var sql = "INSERT INTO users (id, accountId, teamId, familyName, givenName, role,instructor_UN) VALUES (null, ?, ?, ?, ?, ?, null)";
   
-  con.query(sql, [user.accountId, user.teamId, user.familyName, user.givenName ,user.role, user.user_max_progress,user.user_solution_disabled ], function (err, result) {
+  con.query(sql, [user.accountId, user.teamId, user.familyName, user.givenName ,user.role ], function (err, result) {
     if (err) handleErr(errCb,err);
     else handleDone(doneCb,result);
   });
@@ -435,27 +435,6 @@ exports.fetchStudents = function(errCb,doneCb){
   });
 };
 
-//check solution_disabled properties of a user in the database (same usage of db.updateUser)
-exports.checkUserSolutionDisabled = function(user,errCb,doneCb){
-  //console.log(user.id)
-  var con = getConn();
-  var sql = "SELECT solution_disabled FROM users WHERE id = ? and role='student'";
-  con.query(sql, [user.id], function (err, result) {
-    if(err) handleErr(errCb,err);
-    else handleDone(doneCb,result);
-  });
-};
-
-//check solution_disabled properties of a user in the database (same usage of db.updateUser)
-exports.checkUserMaxProgress= function(user,errCb,doneCb){
-  //console.log(user.id)
-  var con = getConn();
-  var sql = "SELECT max_progress FROM users WHERE id = ? and role='student'";
-  con.query(sql, [user.id], function (err, result) {
-    if(err) handleErr(errCb,err);
-    else handleDone(doneCb,result);
-  });
-};
 
 //fetches a team and its members from the database by its name (unique)
 exports.getTeamWithMembersByName = function(name,errCb,doneCb){
