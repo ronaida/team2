@@ -87,10 +87,11 @@
             <div class="container-fluid">
                 <p> </p>
                 <p>The table below lists the students linked with you.</p>
-                <form ng-submit="fetchMyStudents()">
+                <form ng-submit="fetchActivity()">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Filter by name" id="nameFilter" role="searchbox">
                         <div class="input-group-btn">
+<<<<<<< HEAD
                         <button class="btn" ng-click="fetchMyStudents()" role="search"><span class="oi oi-magnifying-glass"></span></button>
 =======
             <!-- Team configuration -->
@@ -105,6 +106,9 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
 >>>>>>> parent of 80ed725 (adding more functions and fixed some)
+=======
+                        <button class="btn" ng-click="fetchActivity()" role="search"><span class="oi oi-magnifying-glass"></span></button>
+>>>>>>> parent of 912f72b (just for syncing)
                         </div>
                         <div class="modal-body">
                             
@@ -133,10 +137,15 @@
                         
                             
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <td>{{studentsList.givenName}} {{studentsList.familyName}}</td>
                             <td>{{studentsList.givenName}} {{studentsList.familyName}}</td>
+=======
+                            <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
+                            <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
+>>>>>>> parent of 912f72b (just for syncing)
                            
-                            <td>{{studentsList.challengeName}}</td>
+                            <td>{{activityEntry.challengeName}}</td>
                             <td><select name="cars" id="cars">
                                 <option value="Yellow Belt">Yellow Belt</option>
                                 <option value="Orange Belt">Orange Belt</option>
