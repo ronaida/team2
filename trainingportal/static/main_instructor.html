@@ -72,11 +72,11 @@
             <div class="container-fluid">
                 <p> </p>
                 <p>The table below lists the students linked with you.</p>
-                <form ng-submit="fetchMyStudents()">
+                <form ng-submit="fetchActivity()">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Filter by name" id="nameFilter" role="searchbox">
                         <div class="input-group-btn">
-                        <button class="btn" ng-click="fetchMyStudents()" role="search"><span class="oi oi-magnifying-glass"></span></button>
+                        <button class="btn" ng-click="fetchActivity()" role="search"><span class="oi oi-magnifying-glass"></span></button>
                         </div>
                     </div>
                 </form>
@@ -95,10 +95,10 @@
                     <tbody>
                         <tr ng-repeat="activityEntry in activityList">
                             
-                            <td>{{studentsList.givenName}} {{studentsList.familyName}}</td>
-                            <td>{{studentsList.givenName}} {{studentsList.familyName}}</td>
+                            <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
+                            <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
                            
-                            <td>{{studentsList.challengeName}}</td>
+                            <td>{{activityEntry.challengeName}}</td>
                             <td><select name="cars" id="cars">
                                 <option value="Yellow Belt">Yellow Belt</option>
                                 <option value="Orange Belt">Orange Belt</option>
