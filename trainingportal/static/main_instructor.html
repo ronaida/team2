@@ -17,6 +17,7 @@
 
 <script src="static/studentsCtrl.js"></script>
 <script src="static/activityCtrl.js"></script>
+<script src="static/trainingModulesCtrl.js"></script>
 
 <link href="/public/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="/public/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
@@ -41,7 +42,7 @@
     <div ng-app="challengesApp" ng-controller="studentsCtrl">
         
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
-            <a class="navbar-brand" href="#!">Secure Coding Dojo (Instructor : {{firstName}}) </a>
+            <a class="navbar-brand" href="#!">Secure Coding Dojo (Instructor : {{fullName}}) </a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -61,94 +62,13 @@
 
        
              <!-- This is where the main view goes -->
-<!-- This is where the main view goes -->
-<div style="margin:20px" ng-view></div>
-
-            <div class="container-fluid">
-                <p> </p>
-                <p>The table below lists the students linked with you.</p>
-          
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-   
-                        <th>Students</th>
-                        <th>Team</th>
-                        <th>Challenge</th>
-                        <th>limit Belt</th>
-                        <th>Hint</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="activityEntry in studentsList">
-                            
-                            <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
-                            <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
-
-
-                           
-                            <td>{{activityEntry.challengeName}}</td>
-                            <td><select name="cars" id="cars">
-                                <option value="Yellow Belt">Yellow Belt</option>
-                                <option value="Orange Belt">Orange Belt</option>
-                                <option value="Green Belt">Green Belt</option>
-                                <option value="Purple Belt ">Purple Belt </option>
-                                <option value="Bleu Belt ">Bleu Belt </option>
-                                     
-                              </select></td>
-                            <td><input type="checkbox" id="Hint" name="Hint" value="Hint"></td>
-            
-            
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-                <br>
-							  
-																									  
-																												   
-														
-				{{studentsList}}			  
-																										   
-																													 
-														  
-							  
-												  
-							
-																																			 
-																																		 
-							  
-						  
-					  
-            </div>
-            
-
-    
-
-
-
-
-
-
+             <div style="margin:20px" ng-view></div>
 
 
             <!-- Profile configuration -->
-        <div id="profileModal" class="modal fade" role="dialog">
-												  
-																	 
-																										
-																	   
-									 
-							  
+    <div id="profileModal" class="modal fade" role="dialog">			  
         <div class="modal-dialog">
 													
-																														 
-							
-								  
-													
-																								
-								  
-
             <!-- Profile configuration UI -->
             <div class="modal-content">
                 <div class="modal-header">
@@ -169,23 +89,11 @@
                     <div class="form-group">
                             <label for="newPassword">New Password:</label>
                             <input type="password" class="form-control" id="newPassword" autocomplete="off" >
-								  
-							 
-							
+			
                     </div>
                     <div class="form-group">
                         <label for="vfyPassword">Verify password:</label>
-                        <input type="password" class="form-control" id="vfyPassword" autocomplete="off">
-							  
-																											  
-																														
-															 
-							  
-												  
-							
-																													
-																											   
-							  
+                        <input type="password" class="form-control" id="vfyPassword" autocomplete="off">																					   							  
                     </div>
                            
                 </div>

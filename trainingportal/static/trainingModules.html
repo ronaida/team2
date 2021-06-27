@@ -1,8 +1,8 @@
 
-<div class="container" ng-app="challengesApp" ng-controller="trainingModulesCtrl" ng-init="init()">
+<div class="container" ng-app="challengesApp" ng-controller="trainingModulesCtrl" ng-init="init()" ng-if="role__==='student'">
     <h3>Hi {{firstName}}! Welcome to the Secure Coding Dojo!</h3>
     <p>Pick a training module below to start.</p>
-    <div class="row">
+    <div class="row" >
         <div class="col-lg-4 d-flex align-items-stretch" ng-repeat="(key, value) in modules" style="padding:1em" >
             
                 <div class="card" >
@@ -23,4 +23,53 @@
                 </div>
     </div>
     </div>
+</div>
+
+<div class="container" ng-app="challengesApp" ng-controller="trainingModulesCtrl" ng-init="init()" ng-if="role__==='instructor'">
+    <h3>Hi professor! Welcome to the Secure Coding Dojo!</h3>
+    <div class="container-fluid">
+        <p> </p>
+        <p>The table below lists the students linked with you.</p>
+  
+        <table class="table table-striped">
+            <thead>
+            <tr>
+
+                <th>Students</th>
+                <th>Team</th>
+                <th>Challenge</th>
+                <th>limit Belt</th>
+                <th>Hint</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="activityEntry in studentsList">
+                    
+                    <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
+                    <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
+
+
+                   
+                    <td>{{activityEntry.challengeName}}</td>
+                    <td><select name="cars" id="cars">
+                        <option value="Yellow Belt">Yellow Belt</option>
+                        <option value="Orange Belt">Orange Belt</option>
+                        <option value="Green Belt">Green Belt</option>
+                        <option value="Purple Belt ">Purple Belt </option>
+                        <option value="Bleu Belt ">Bleu Belt </option>
+                             
+                      </select></td>
+                    <td><input type="checkbox" id="Hint" name="Hint" value="Hint"></td>
+    
+    
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+                                        
+        {{studentsList}}			  
+
+    </div>
+    
 </div>

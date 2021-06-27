@@ -100,7 +100,7 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
                 $scope.user = user;
                 $scope.fullName = user.givenName + ' ' + user.familyName;
                 $scope.firstName = user.givenName;
-
+                $scope.role__=user.role;
                 $scope.fetchTeams();
                         
                 //do the first activity heartbeat
@@ -124,6 +124,7 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
         var filter = "";
         if(typeof nameFilter !== 'undefined'){
             filter=nameFilter.value;
+
         }
         $http.get("/api/students?query="+filter,window.getAjaxOpts())
             .then(function(response) {

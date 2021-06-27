@@ -374,7 +374,7 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
                 $scope.user = user;
                 $scope.fullName = user.givenName + ' ' + user.familyName;
                 $scope.firstName = user.givenName;
-
+                $scope.role__=user.role;
                 $scope.fetchTeams();
                         
                 //do the first activity heartbeat
