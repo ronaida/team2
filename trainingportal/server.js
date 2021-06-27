@@ -436,11 +436,11 @@ app.get('/api/instructors',  (req, res) => {
 });
 
 //get the available students
-app.get('/api/students',  (req, res) => {
-  db.fetchInstructors(null,function(studentsList){
-    res.send(studentsList);
-  });
-});
+// app.get('/api/students',  (req, res) => {
+//   db.fetchStudents(null,function(studentsList){
+//     res.send(studentsList);
+//   });
+// });
 
 //get the team members
 app.get('/api/teams/:teamId/badges', async (req, res) => {
@@ -497,14 +497,13 @@ app.get('/api/activity',  (req, res) => {
 
 //get instructor students linked with
 app.get('/api/students',  (req, res) => {
-  var query = req.query.query;
-  if(util.isNullOrUndefined(query)) query = "";
-  query = query.trim();
-  if(query !== "" && !validator.matches(query,/^[A-Z'\-\s]+$/i)){
-    return util.apiResponse(req,res,400,"Invalid query");
+  var instructor_username = req.query.user_accountId;
+
+  if(instructor_username !== "" && !validator.matches(instructor_username,/^[A-Z'\-\s]+$/i)){
+    return util.apiResponse(req,res,400,"Invalid instructor_username");
   }
-  
-  db.fetchMystudents(query,100,null,function(studentsList){
+  //db.fetchStudents(null,function(studentsList){
+  db.fetchMystudents(null,instructor_username,null,function(studentsList){
     res.send(studentsList);
   });
 });

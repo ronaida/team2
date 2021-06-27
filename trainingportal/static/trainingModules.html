@@ -26,7 +26,7 @@
 </div>
 
 <div class="container" ng-app="challengesApp" ng-controller="trainingModulesCtrl" ng-init="init()" ng-if="role__==='instructor'">
-    <h3>Hi professor! Welcome to the Secure Coding Dojo!</h3>
+    <h3>Hi professor {{firstName}}! Welcome to the Secure Coding Dojo!</h3>
     <div class="container-fluid">
         <p> </p>
         <p>The table below lists the students linked with you.</p>
@@ -35,23 +35,24 @@
             <thead>
             <tr>
 
-                <th>Students</th>
-                <th>Team</th>
-                <th>Challenge</th>
+                <th>Student Name</th>
+                <th>User Name</th>
+                <th>Solution Button</th>
+                <th>Current Belt</th>
                 <th>limit Belt</th>
                 <th>Hint</th>
             </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="activityEntry in studentsList">
+                <tr ng-repeat="studentEntry in studentsList">
                     
-                    <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
-                    <td>{{activityEntry.givenName}} {{activityEntry.familyName}}</td>
+                    <td>{{studentEntry.givenName}} {{studentEntry.familyName}}</td>
+                    <td>{{studentEntry.accountId.replace('Local_','')}}</td>
 
 
                    
-                    <td>{{activityEntry.challengeName}}</td>
-                    <td><select name="cars" id="cars">
+                    <td>{{studentEntry.solution_disabled}}</td>
+                    <td><select name="challengelevel_limit" id="challengelevel_limit">
                         <option value="Yellow Belt">Yellow Belt</option>
                         <option value="Orange Belt">Orange Belt</option>
                         <option value="Green Belt">Green Belt</option>
@@ -59,7 +60,7 @@
                         <option value="Bleu Belt ">Bleu Belt </option>
                              
                       </select></td>
-                    <td><input type="checkbox" id="Hint" name="Hint" value="Hint"></td>
+                    <td><input type="checkbox" id="Hint" name="Hint" value="Hint" ></td>
     
     
                 </tr>

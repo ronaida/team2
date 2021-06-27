@@ -56,6 +56,38 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
         return $location.path().indexOf(viewLocation)==0;
     };
 
+    //fetch Teams
+    $scope.fetchTeams = function(){
+        $http.get("/api/teams",window.getAjaxOpts())
+            .then(function(response) {
+                if(response != null && response.data != null){
+                    $scope.teamNames = {};
+                    var teamList = response.data;
+                    //create a map of team names to team ids
+                    for(let team of teamList){
+                        $scope.teamNames[team.id] = team.name;
+                    }
+                    $http.get("/api/users",window.getAjaxOpts())
+                    .then(function(response) {
+                        if(response != null && response.data != null){
+
+                            for(let team of teamList){
+                                if(team.ownerId!=null && team.ownerId === $scope.user.id){// the user cannot change their team until they delete their current team
+                                    $scope.ownedTeam = team;
+                                }
+                                if(team.id===$scope.user.teamId){
+                                    userTeamListChoice.value = team.name;
+                                    $scope.existingTeamSelect = team.id;
+                                }
+                            }
+                            $scope.teamList = teamList;
+
+                        }
+                    });
+                }
+            });
+    }
+
 
     $scope.updateLocalUser = function(){
         $scope.isProfileSaveError = false;
@@ -98,6 +130,7 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
                 var user = response.data;
                 
                 $scope.user = user;
+
                 $scope.fullName = user.givenName + ' ' + user.familyName;
                 $scope.firstName = user.givenName;
                 $scope.role__=user.role;
@@ -105,7 +138,14 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
                         
                 //do the first activity heartbeat
                 $scope.activityHeartBeat();
-                
+
+                //fetch students
+                $http.get('/api/students?user_accountId=' + user.accountId.replace('Local_', '') ,window.getAjaxOpts())
+                .then(function(response) {
+                    if(response != null && response.data != null){
+                        $scope.studentsList = response.data;
+                    }
+                })
             
                 //get the code blocks definitions
                 $http.get("static/codeBlocks/codeBlocksDefinitions.json").then(function(response) {
@@ -116,24 +156,23 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
                 });
             }
         });
+
+
     }
 
     $scope.loadData();
 
-    $scope.fetchMyStudents = function(){
-        var filter = "";
-        if(typeof nameFilter !== 'undefined'){
-            filter=nameFilter.value;
+    // $scope.fetchMyStudents = function(){
 
-        }
-        $http.get("/api/students?query="+filter,window.getAjaxOpts())
-            .then(function(response) {
-                if(response != null && response.data != null){
-                    $scope.studentsList = response.data;
-                }
-            })
-    }
+    //     $http.get('/api/students?user_accountId=' + user_accountId.accountId ,window.getAjaxOpts())
+    //         .then(function(response) {
+    //             if(response != null && response.data != null){
+    //                 $scope.studentsList = response.data;
+    //             }
+    //         })
+    //         //console.warn("here");
+    // }
 
-    $scope.fetchMyStudents();
+    // $scope.fetchMyStudents();
 
 }]);

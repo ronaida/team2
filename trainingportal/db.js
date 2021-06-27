@@ -625,25 +625,10 @@ exports.fetchChallengeEntriesForUser = function(user,errCb,doneCb){
  * @param {*} errCb 
  * @param {*} doneCb 
  */
-exports.fetchMystudents = function(query,limit,errCb,doneCb){
+exports.fetchMystudents = function(query,instructor_username,errCb,doneCb){
   var con = getConn();
-  var sql = "";
-  var args = [];
-  if(!util.isNullOrEmpty(query)){
-    //var con = getConn();
-    //var sql = "SELECT * FROM users WHERE role='student' ";
-    //con.query(sql, function (err, result) {
-     //   if(err) 
-     //     handleErr(errCb,err);
-       // else{
-         // handleDone(doneCb,result);
-      //}
-    //});
-  }
-  else{
-    sql = "SELECT * FROM users WHERE role='student' and instructor_UN = ?";
-    args = [query];
-  }
+  sql = "SELECT * FROM users WHERE role='student' AND instructor_UN = ?";
+  args = [instructor_username];
   con.query(sql, args, function (err, result) {
     if(err) handleErr(errCb,err);
     else{
