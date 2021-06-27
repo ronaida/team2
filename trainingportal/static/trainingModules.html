@@ -43,6 +43,7 @@
                 <th>Current Belt</th>
                 <th>limit Belt</th>
                 <th>Hint</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -50,10 +51,7 @@
                     
                     <td>{{studentEntry.givenName}} {{studentEntry.familyName}}</td>
                     <td>{{studentEntry.accountId.replace('Local_','')}}</td>
-                    <th>x</th>
-
-
-                   
+                    <th>Team name is shown here</th>
                     <td>{{studentEntry.solution_disabled}}</td>
                     <td> {{beltsdeff[studentEntry.currentLevel]}}</td>
 
@@ -66,8 +64,11 @@
                         <option value="Belt_5">Black Belt </option>
 
                       </select></td>
-                    <td><input type="checkbox" id="Hint" name="Hint" value="Hint" ></td>
-    
+
+                    <td><input type="checkbox" id="Hint" name="Hint" value="Hint"></td>
+
+                    <td><input type="button" value="Update" ng-click="changeBelt($index)" /></td>
+
     
                 </tr>
             </tbody>
@@ -79,8 +80,9 @@
                                         
         {{studentsList}}			  
         <br>
+
+        {{indexVal}}
         <br>
-        {{teamList[0]}}
     </div>
     
 </div>

@@ -146,7 +146,7 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
                         $scope.studentsList = response.data;
                     }
                 })
-            
+                
                 //get the code blocks definitions
                 $http.get("static/codeBlocks/codeBlocksDefinitions.json").then(function(response) {
                     if(response != null && response.data != null){
