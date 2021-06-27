@@ -123,7 +123,7 @@ exports.isPermittedModule = async (user, moduleId) => {
 }
 
 /**
- * Get the user level based on the ammount of passed challenges
+ * Get the user (MAX Allowed) level based on the ammount of passed challenges
  */
 exports.getUserLevelForModule = async (user,moduleId) => {
     let moduleDefinitions = getDefinifionsForModule(moduleId);
@@ -165,6 +165,35 @@ exports.getUserLevelForModule = async (user,moduleId) => {
     //console.log(userLevel);
     return userLevel;
 }
+
+/**
+ * Get the user level based on the ammount of passed challenges
+ */
+ exports.getUserCurrentLevelForModule = async (user,moduleId) => {
+    let moduleDefinitions = getDefinifionsForModule(moduleId);
+    let passedChallenges =  await db.getPromise(db.fetchChallengeEntriesForUser,user);
+    //console.log(passedChallenges);
+    let userLevel=-1;
+    for(let level of moduleDefinitions){
+        let passCount = 0;
+        for(let chDef of level.challenges) {
+            for(let passedCh of passedChallenges){
+                if(chDef.id===passedCh.challengeId){
+                    passCount++;
+                }
+            }
+        }
+        if(passCount===level.challenges.length){
+            userLevel = level.level;
+        }
+        else{
+            break;
+        }
+    }
+    //console.log(userLevel);
+    return userLevel;
+}
+
 
 /**
  * Get permitted challenges for module

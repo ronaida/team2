@@ -27,6 +27,7 @@
 
 <div class="container" ng-app="challengesApp" ng-controller="trainingModulesCtrl" ng-init="init()" ng-if="role__==='instructor'">
     <h3>Hi professor {{firstName}}! Welcome to the Secure Coding Dojo!</h3>
+    <br>
     <div class="container-fluid">
         <p> </p>
         <p>The table below lists the students linked with you.</p>
@@ -37,6 +38,7 @@
 
                 <th>Student Name</th>
                 <th>User Name</th>
+                <th>Team Name</th>
                 <th>Solution Button</th>
                 <th>Current Belt</th>
                 <th>limit Belt</th>
@@ -48,17 +50,21 @@
                     
                     <td>{{studentEntry.givenName}} {{studentEntry.familyName}}</td>
                     <td>{{studentEntry.accountId.replace('Local_','')}}</td>
+                    <th>x</th>
 
 
                    
                     <td>{{studentEntry.solution_disabled}}</td>
+                    <td> {{beltsdeff[studentEntry.currentLevel]}}</td>
+
                     <td><select name="challengelevel_limit" id="challengelevel_limit">
-                        <option value="Yellow Belt">Yellow Belt</option>
-                        <option value="Orange Belt">Orange Belt</option>
-                        <option value="Green Belt">Green Belt</option>
-                        <option value="Purple Belt ">Purple Belt </option>
-                        <option value="Bleu Belt ">Bleu Belt </option>
-                             
+                        <option value="Belt_0">Yellow Belt</option>
+                        <option value="Belt_1">Orange Belt</option>
+                        <option value="Belt_2">Green Belt</option>
+                        <option value="Belt_3">Purple Belt </option>
+                        <option value="Belt_4">Blue Belt </option>
+                        <option value="Belt_5">Black Belt </option>
+
                       </select></td>
                     <td><input type="checkbox" id="Hint" name="Hint" value="Hint" ></td>
     
@@ -66,11 +72,15 @@
                 </tr>
             </tbody>
         </table>
+
         <br>
+        {{teamList}}
         <br>
                                         
         {{studentsList}}			  
-
+        <br>
+        <br>
+        {{teamList[0]}}
     </div>
     
 </div>

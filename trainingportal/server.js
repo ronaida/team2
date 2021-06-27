@@ -435,13 +435,6 @@ app.get('/api/instructors',  (req, res) => {
   });
 });
 
-//get the available students
-// app.get('/api/students',  (req, res) => {
-//   db.fetchStudents(null,function(studentsList){
-//     res.send(studentsList);
-//   });
-// });
-
 //get the team members
 app.get('/api/teams/:teamId/badges', async (req, res) => {
   let teamId = req.params.teamId;
@@ -496,14 +489,19 @@ app.get('/api/activity',  (req, res) => {
 });
 
 //get instructor students linked with
-app.get('/api/students',  (req, res) => {
+app.get('/api/students', async (req, res) => {
   var instructor_username = req.query.user_accountId;
-
   if(instructor_username !== "" && !validator.matches(instructor_username,/^[A-Z'\-\s]+$/i)){
     return util.apiResponse(req,res,400,"Invalid instructor_username");
   }
-  //db.fetchStudents(null,function(studentsList){
-  db.fetchMystudents(null,instructor_username,null,function(studentsList){
+  db.fetchMystudents(null,instructor_username,null,async function(studentsList){
+    //console.log(studentsList.length)
+    var don_chan;
+    for (let i = 0; i < studentsList.length; i++) {
+      don_chan= await challenges.getUserCurrentLevelForModule(studentsList[i], "blackBelt");
+      studentsList[i]["currentLevel"]=don_chan;
+    }
+    //studentsList.userLevelForModule = challenges.getUserCurrentLevelForModule(studentsList, "blackBelt");
     res.send(studentsList);
   });
 });

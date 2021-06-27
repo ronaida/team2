@@ -28,4 +28,5 @@ app.controller("trainingModulesCtrl", function ($scope, $http) {
         }
         return false;
     }
+    $scope.beltsdeff=['Yellow Belt','Orange Belt','Green Belt','Purple Belt','Blue Belt','Black Belt'];
 });

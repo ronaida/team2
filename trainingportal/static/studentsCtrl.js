@@ -162,17 +162,4 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
 
     $scope.loadData();
 
-    // $scope.fetchMyStudents = function(){
-
-    //     $http.get('/api/students?user_accountId=' + user_accountId.accountId ,window.getAjaxOpts())
-    //         .then(function(response) {
-    //             if(response != null && response.data != null){
-    //                 $scope.studentsList = response.data;
-    //             }
-    //         })
-    //         //console.warn("here");
-    // }
-
-    // $scope.fetchMyStudents();
-
 }]);
