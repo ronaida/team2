@@ -392,19 +392,22 @@ app.controller('mainCtrl', ['$rootScope','$http','$location','dataSvc', function
         });
     }
 
-    $scope.fetchMyStudents = function(){
-        var filter = "";
-        if(typeof nameFilter !== 'undefined'){
-            filter=nameFilter.value;
-        }
-        $http.get("/api/students?query="+"instructor",window.getAjaxOpts())
-            .then(function(response) {
-                if(response != null && response.data != null){
-                    $scope.studentsList = response.data;
-                }
-            })
-    }
-
     $scope.loadData();
+
+    // $scope.fetchMyStudents = function(){
+    //     var filter = "";
+    //     if(typeof nameFilter !== 'undefined'){
+    //         filter=nameFilter.value;
+    //     }
+    //     $http.get("/api/students?query="+filter,window.getAjaxOpts())
+    //         .then(function(response) {
+    //             if(response != null && response.data != null){
+    //                 $scope.studentsList = response.data;
+    //             }
+    //         })
+    // }
+
+    // $scope.fetchMyStudents();
+
 
 }]);
