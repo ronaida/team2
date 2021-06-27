@@ -13,17 +13,30 @@ assignees: ''
 Path :
 File  :
 Line :
+
 **Part of the code issue**
 
+```js script
+
+
+```
 
 **Recommendation**
 
 
 **example to this issue**
 
+```js script
+
+
+```
 
 **example to solve this issue**
 
+```js script
+
+
+```
 
 
 **References**
