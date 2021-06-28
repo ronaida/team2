@@ -31,7 +31,18 @@
     <div class="container-fluid">
         <p> </p>
         <p>The table below lists the students linked with you.</p>
+
   
+                        <div class="alert alert-danger" id="UpdateErrorMessage" ng-if="isUpdateSaveError">
+                                <button type="button" class="close" ng-click="hideUpdateSaveError()">&times;</button>
+                                {{UpdateSaveErrorMessage}}
+                        </div>
+                        <div class="alert alert-success" id="UpdateSuccessMessage" ng-if="isUpdateSaveSuccess">
+                                <button type="button" class="close" ng-click="hideUpdateSaveSuccess()">&times;</button>
+                                {{UpdateSaveSuccessMessage}}
+                        </div>
+
+                        
         <table class="table table-striped" id="myTable">
             <thead>
                 <tr>

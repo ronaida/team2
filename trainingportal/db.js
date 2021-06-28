@@ -265,6 +265,17 @@ exports.insertUser = function(user,errCb,doneCb){
   });
 };
 
+//update a student in the database
+exports. updateStudent = function(user,errCb,doneCb){
+  var con = getConn();
+  var sql = "UPDATE users SET solution_disabled = ?, max_progress= ?  WHERE id = ? AND accountId = ? AND instructor_UN = ?";
+  con.query(sql, [user.solution_disabled, user.max_progress, user.id, user.accountId, user.instructor_UN], function (err, result) {
+    if (err) handleErr(errCb,err);
+    else handleDone(doneCb,result);
+  });
+ 
+};
+
 //Creates a user in the database
 exports.linkInstructorUserName = function(user,errCb,doneCb){
   var con = getConn();

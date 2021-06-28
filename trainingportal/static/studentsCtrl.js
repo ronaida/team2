@@ -9,6 +9,18 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
         $location.url(redirectPath);
     }
     
+
+
+    //hide a team save error
+    $scope.hideUpdateSaveError = function() {
+            $scope.isUpdateSaveError = false;
+        }
+    
+        //hide a team save success message
+    $scope.hideUpdateSaveSuccess = function() {
+            $scope.isUpdateSaveSuccess = false;
+        }
+
     $scope.activityHeartBeat = function(){
         $http.get("/api/activity/heartbeat",window.getAjaxOpts())
             .then(function(response) {
@@ -192,7 +204,7 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
 
             var new_max_limit;
             var new_disabled_sloution;
-            var studentUpdates=[];
+            var studentUpdates={};
 
             //get the value of Solution Button	chlidren[3]
             new_disabled_sloution=document.getElementsByTagName("TR")[index+1].children[3].children[0].value;
@@ -200,14 +212,40 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
             //get the value of Max Allowed Belt	chlidren[5]
             new_max_limit=document.getElementsByTagName("TR")[index+1].children[5].children[0].value;
 
-            studentUpdates["accountId"]=$scope.studentsList[index].accountId;
-            studentUpdates["solution_disabled"]=new_disabled_sloution;
-            studentUpdates["max_progress"]=new_max_limit;
+            //studentUpdates.instructor_UN=$user.accountId.replace('Local_', '')
+            studentUpdates.accountId=$scope.studentsList[index].accountId;
+            studentUpdates.id=$scope.studentsList[index].id;
+            studentUpdates.solution_disabled=new_disabled_sloution;
+            studentUpdates.max_progress=new_max_limit;
 
-            $scope.indexVal=$scope.beltsdeff[studentUpdates.max_progress];
-                       
+            //$scope.indexVal=$scope.beltsdeff[studentUpdates.max_progress];
+
+            ///api submiting here
+            $scope.isUpdateSaveError = false;
+            $scope.isUpdateSaveSuccess = false;
+            $scope.UpdateSaveErrorMessage = "";
         
-    }
+            $http.post("/api/student_update",{
+                "studentUpdates": studentUpdates,
+            },window.getAjaxOpts())
+            .then(function(response) {
+                if(response !== null && response.data !== null){
+                    if(response.data.status == 200){
+                        $scope.isUpdateSaveSuccess = true;
+                        $scope.UpdateSaveSuccessMessage = "Updated successfully.";
+                    }
+                    else{
+                        $scope.isUpdateSaveError = true;
+                        $scope.UpdateSaveErrorMessage = response.data.statusMessage;
+                    }
 
+                }
+            },function(errorResponse){
+                $scope.isUpdateSaveError = true;
+                $scope.UpdateSaveErrorMessage = "A http error has occurred.";
+            
+            });
+                   
+    }
 
 }]);
