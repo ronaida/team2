@@ -32,7 +32,7 @@
         <p> </p>
         <p>The table below lists the students linked with you.</p>
   
-        <table class="table table-striped">
+        <table class="table table-striped" id="myTable">
             <thead>
                 <tr>
                     <th>Student Name</th>
@@ -45,7 +45,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="studentEntry in studentsList">                   
+                <tr ng-repeat="studentEntry in studentsList" >                   
                     <td>{{studentEntry.givenName}} {{studentEntry.familyName}}</td>
                     <td>{{studentEntry.accountId.replace('Local_','')}}</td>
                     <td>Team name is shown here</td>
@@ -59,16 +59,16 @@
                     <td>{{beltsdeff[studentEntry.currentLevel]}}</td>
 
                     <td>
-                        <select class="form-select"  name="challengelevel_limit" id="challengelevel_limit" > 
-                            <option value=0 ng-selected="studentEntry.max_progress==0 ">Yellow Belt</option>
-                            <option value=1 ng-selected="studentEntry.max_progress==1 ">Orange Belt</option>
+                        <select class="form-select"  name="challengelevel_limit" id="challengelevel_limit"> 
+                            <option value=0 ng-selected="studentEntry.max_progress==0" >Yellow Belt</option>
+                            <option value=1 ng-selected="studentEntry.max_progress==1" >Orange Belt</option>
                             <option value=2 ng-selected="studentEntry.max_progress==2" >Green Belt</option>
                             <option value=3 ng-selected="studentEntry.max_progress==3" >Purple Belt </option>
                             <option value=4 ng-selected="studentEntry.max_progress==4" >Blue Belt </option>
                             <option value=5 ng-selected="studentEntry.max_progress==5" >Black Belt </option>
                         </select>
                     </td>
-                    <td><button  type="button" class="btn btn-secondary" ng-click="changeBelt($index)">Update</button> </td>
+                    <td><button  type="button" class="btn btn-secondary" ng-click="updateStudent($index)">Update</button> </td>
                 </tr>
             </tbody>
         </table>

@@ -162,4 +162,52 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
 
     $scope.loadData();
 
+//instructor functions are here 
+
+    $scope.beltsdeff=['Yellow Belt','Orange Belt','Green Belt','Purple Belt','Blue Belt','Black Belt'];
+
+    $scope.updateStudent = function (index){
+        //$window.alert("Row Index: " + index);
+        //$scope.indexVal=$scope.studentsList[index].accountId;
+        //var challengelevel_limit_value = document.getElementById("challengelevel_limit");
+        //var x = document.getElementById("myTable").rows[0].innerHTML;
+        //$window.alert(document.getElementById("challengelevel_limit").value[0].innerHTML);
+
+        // var new_max_limit;
+        // for (let i =0; i<$scope.beltsdeff.length ; i++){
+        //     if(challengelevel_limit_value.options[i].selected)  new_max_limit=i;
+        // }
+        // //var strUser = e.options[index].selected;
+        // $scope.indexVal=new_max_limit;
+        //$scope.indexVal["challengelevel_limit"]=challengelevel_limit.value;
+
+
+
+        
+           // document.getElementById('info').innerHTML = ""; 
+           //$window.alert(document.getElementById('myTable').rows[index].innerHTML); 
+            //const opt = document.getElementById("challengelevel_limit").value; 
+            //let index_2 = document.getElementById(challengelevel_limitpt).cellIndex; 
+
+
+            var new_max_limit;
+            var new_disabled_sloution;
+            var studentUpdates=[];
+
+            //get the value of Solution Button	chlidren[3]
+            new_disabled_sloution=document.getElementsByTagName("TR")[index+1].children[3].children[0].value;
+
+            //get the value of Max Allowed Belt	chlidren[5]
+            new_max_limit=document.getElementsByTagName("TR")[index+1].children[5].children[0].value;
+
+            studentUpdates["accountId"]=$scope.studentsList[index].accountId;
+            studentUpdates["solution_disabled"]=new_disabled_sloution;
+            studentUpdates["max_progress"]=new_max_limit;
+
+            $scope.indexVal=$scope.beltsdeff[studentUpdates.max_progress];
+                       
+        
+    }
+
+
 }]);
