@@ -984,20 +984,6 @@ camelcase@^6.0.0:
   resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/camelcase/-/camelcase-6.2.0.tgz#924af881c9d525ac9d87f40d964e5cea982a1809"
   integrity sha1-kkr4gcnVJaydh/QNlk5c6pgqGAk=
 
-canvas-confetti@^1.3.3:
-  version "1.3.3"
-  resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/canvas-confetti/-/canvas-confetti-1.3.3.tgz#8eeb9fe7f77a5076922201648781b6d6a5039fa3"
-  integrity sha1-juuf5/d6UHaSIgFkh4G21qUDn6M=
-
-canvas@^2.6.1:
-  version "2.6.1"
-  resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/canvas/-/canvas-2.6.1.tgz#0d087dd4d60f5a5a9efa202757270abea8bef89e"
-  integrity sha1-DQh91NYPWlqe+iAnVycKvqi++J4=
-  dependencies:
-    nan "^2.14.0"
-    node-pre-gyp "^0.11.0"
-    simple-get "^3.0.3"
-
 captchapng@0.0.1:
   version "0.0.1"
   resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/captchapng/-/captchapng-0.0.1.tgz#17605d4076fec6370791061aa814399e18c893ea"
@@ -1439,13 +1425,6 @@ decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
-
-decompress-response@^4.2.0:
-  version "4.2.1"
-  resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/decompress-response/-/decompress-response-4.2.1.tgz#414023cc7a302da25ce2ec82d0d5238ccafd8986"
-  integrity sha1-QUAjzHowLaJc4uyC0NUjjMr9iYY=
-  dependencies:
-    mimic-response "^2.0.0"
 
 decompress-zip@^0.3.2:
   version "0.3.3"
@@ -2951,9 +2930,9 @@ lodash.union@^4.6.0:
   integrity sha1-SLtQiECfFvGCFmZkHETdGqrjzYg=
 
 lodash@^4.0.0, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19:
-  version "4.17.20"
-  resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
-  integrity sha1-tEqbYpe8tpjxxRo1RaKzs2jVnFI=
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-symbols@2.2.0:
   version "2.2.0"
@@ -3118,11 +3097,6 @@ mime@1.6.0:
   version "1.6.0"
   resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   integrity sha1-Ms2eXGRVO9WNGaVor0Uqz/BJgbE=
-
-mimic-response@^2.0.0:
-  version "2.1.0"
-  resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/mimic-response/-/mimic-response-2.1.0.tgz#d13763d35f613d09ec37ebb30bac0469c0ee8f43"
-  integrity sha1-0Tdj019hPQnsN+uzC6wEacDuj0M=
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -3611,7 +3585,7 @@ on-headers@~1.0.2:
   resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/on-headers/-/on-headers-1.0.2.tgz#772b0ae6aaa525c399e489adfad90c403eb3c28f"
   integrity sha1-dysK5qqlJcOZ5Imt+tkMQD6zwo8=
 
-once@^1.3.0, once@^1.3.1, once@^1.4.0:
+once@^1.3.0, once@^1.4.0:
   version "1.4.0"
   resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/once/-/once-1.4.0.tgz#583b1aa775961d4b113ac17d9c50baef9dd76bd1"
   integrity sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
@@ -3732,10 +3706,10 @@ pascalcase@^0.1.1:
   resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-passport-google-oauth20@^1.0.0:
-  version "1.0.0"
-  resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/passport-google-oauth20/-/passport-google-oauth20-1.0.0.tgz#3b960e8a1d70d1dbe794615c827c68c40392a5d0"
-  integrity sha1-O5YOih1w0dvnlGFcgnxoxAOSpdA=
+passport-google-oauth20@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/passport-google-oauth20/-/passport-google-oauth20-2.0.0.tgz#0d241b2d21ebd3dc7f2b60669ec4d587e3a674ef"
+  integrity sha512-KSk6IJ15RoxuGq7D1UKK/8qKhNfzbLeLrG3gkLZ7p4A6DBCcv7xpyQwuXtWdpyR0+E0mwkpjY1VfPOhxQrKzdQ==
   dependencies:
     passport-oauth2 "1.x.x"
 
@@ -4569,15 +4543,6 @@ simple-concat@^1.0.0:
   version "1.0.1"
   resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/simple-concat/-/simple-concat-1.0.1.tgz#f46976082ba35c2263f1c8ab5edfe26c41c9552f"
   integrity sha1-9Gl2CCujXCJj8cirXt/ibEHJVS8=
-
-simple-get@^3.0.3:
-  version "3.1.0"
-  resolved "https://artifactory-pub.bit9.local:443/artifactory/api/npm/npm-virtual/simple-get/-/simple-get-3.1.0.tgz#b45be062435e50d159540b576202ceec40b9c6b3"
-  integrity sha1-tFvgYkNeUNFZVAtXYgLO7EC5xrM=
-  dependencies:
-    decompress-response "^4.2.0"
-    once "^1.3.1"
-    simple-concat "^1.0.0"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
