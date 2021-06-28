@@ -35,4 +35,14 @@ app.controller("trainingModulesCtrl", function ($scope, $http) {
         //$window.alert("Row Index: " + index);
         $scope.indexVal=$scope.studentsList[index];
     }
+
+    $scope.checkBelt = function (value1, value2){
+        if(value1==value2){
+            $scope.selcted_belt_val='selected';
+            return "selected";
+        }
+            
+       // $scope.indexVal=$scope.studentsList[index];
+    }
+
 });

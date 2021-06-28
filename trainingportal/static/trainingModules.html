@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div class="container" ng-app="challengesApp" ng-controller="trainingModulesCtrl" ng-init="init()" ng-if="role__==='instructor'">
+<div class="container" ng-app="challengesApp" ng-controller="trainingModulesCtrl" ng-init="init()" ng-if="role__==='instructor'" >
     <h3>Hi professor {{firstName}}! Welcome to the Secure Coding Dojo!</h3>
     <br>
     <div class="container-fluid">
@@ -34,42 +34,41 @@
   
         <table class="table table-striped">
             <thead>
-            <tr>
-
-                <th>Student Name</th>
-                <th>User Name</th>
-                <th>Team Name</th>
-                <th>Solution Button</th>
-                <th>Current Belt</th>
-                <th>limit Belt</th>
-                <th>Hint</th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th>Student Name</th>
+                    <th>User Name</th>
+                    <th>Team Name</th>
+                    <th>Solution Button</th>
+                    <th>Current Belt</th>
+                    <th>Max Allowed Belt</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="studentEntry in studentsList">
-                    
+                <tr ng-repeat="studentEntry in studentsList">                   
                     <td>{{studentEntry.givenName}} {{studentEntry.familyName}}</td>
                     <td>{{studentEntry.accountId.replace('Local_','')}}</td>
-                    <th>Team name is shown here</th>
-                    <td>{{studentEntry.solution_disabled}}</td>
-                    <td> {{beltsdeff[studentEntry.currentLevel]}}</td>
+                    <td>Team name is shown here</td>
+                    <td>
+                        <select class="form-select"  name="sol_button_disabled" id="sol_button_disabled" > 
+                            <option value='disabled' ng-selected="studentEntry.solution_disabled=='disabled' ">Disabled</option>
+                            <option value='enabled' ng-selected="studentEntry.solution_disabled=='enabled' ">Enabled</option>
+                           
+                        </select>
+                    </td>
+                    <td>{{beltsdeff[studentEntry.currentLevel]}}</td>
 
-                    <td><select name="challengelevel_limit" id="challengelevel_limit">
-                        <option value="Belt_0">Yellow Belt</option>
-                        <option value="Belt_1">Orange Belt</option>
-                        <option value="Belt_2">Green Belt</option>
-                        <option value="Belt_3">Purple Belt </option>
-                        <option value="Belt_4">Blue Belt </option>
-                        <option value="Belt_5">Black Belt </option>
-
-                      </select></td>
-
-                    <td><input type="checkbox" id="Hint" name="Hint" value="Hint"></td>
-
-                    <td><input type="button" value="Update" ng-click="changeBelt($index)" /></td>
-
-    
+                    <td>
+                        <select class="form-select"  name="challengelevel_limit" id="challengelevel_limit" > 
+                            <option value=0 ng-selected="studentEntry.max_progress==0 ">Yellow Belt</option>
+                            <option value=1 ng-selected="studentEntry.max_progress==1 ">Orange Belt</option>
+                            <option value=2 ng-selected="studentEntry.max_progress==2" >Green Belt</option>
+                            <option value=3 ng-selected="studentEntry.max_progress==3" >Purple Belt </option>
+                            <option value=4 ng-selected="studentEntry.max_progress==4" >Blue Belt </option>
+                            <option value=5 ng-selected="studentEntry.max_progress==5" >Black Belt </option>
+                        </select>
+                    </td>
+                    <td><button  type="button" class="btn btn-secondary" ng-click="changeBelt($index)">Update</button> </td>
                 </tr>
             </tbody>
         </table>
