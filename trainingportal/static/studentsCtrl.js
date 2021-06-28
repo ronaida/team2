@@ -225,9 +225,7 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
             $scope.isUpdateSaveSuccess = false;
             $scope.UpdateSaveErrorMessage = "";
         
-            $http.post("/api/student_update",{
-                "studentUpdates": studentUpdates,
-            },window.getAjaxOpts())
+            $http.post("/api/student_update",{"studentUpdates": studentUpdates,},window.getAjaxOpts())
             .then(function(response) {
                 if(response !== null && response.data !== null){
                     if(response.data.status == 200){
@@ -238,7 +236,6 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
                         $scope.isUpdateSaveError = true;
                         $scope.UpdateSaveErrorMessage = response.data.statusMessage;
                     }
-
                 }
             },function(errorResponse){
                 $scope.isUpdateSaveError = true;

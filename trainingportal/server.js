@@ -607,15 +607,14 @@ app.post('/api/student_update', auth.ensureApiAuth, (req, res) => {
   studentUpdates.instructor_UN=user.accountId.replace('Local_','')
   //user.instructor_UN=instructorUsername
 
-  if(util.isNullOrUndefined(studentUpdates) || validator.matches(studentUpdates,/^[a-z0-9\s_'\-]+$/i)==false){
-     return util.apiResponse(req, res, 400, "Invalid Request.");
-  }
+  // if(util.isNullOrUndefined(studentUpdates) || validator.matches(studentUpdates,/^[a-z0-9\s_'\-]+$/i)==false){
+  //    return util.apiResponse(req, res, 400, "Invalid Request.");
+  // }
   //check if the req is from the instructor account
   db.fetchInstructors(null, function(users){  
     for (let i = 0; i < users.length; i++) {
       if (req.user.accountId===users[i].accountId)
-      {
-           
+      {          
         //link the student to the instructor
         db.getPromise(db.updateStudent,studentUpdates);
         return util.apiResponse(req, res, 200, "Updated Seccesfully");   
