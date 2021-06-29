@@ -491,7 +491,7 @@ app.get('/api/activity',  (req, res) => {
 //get instructor students linked with
 app.get('/api/students', async (req, res) => {
   var instructor_username = req.query.user_accountId;
-  if(instructor_username !== "" && !validator.matches(instructor_username,/^[A-Z'\-\s]+$/i)){
+  if(instructor_username !== "" && !validator.matches(instructor_username,/^[a-z0-9\s_'\-]+$/i)){
     return util.apiResponse(req,res,400,"Invalid instructor_username");
   }
   db.fetchMystudents(null,instructor_username,null,async function(studentsList){
@@ -605,17 +605,31 @@ app.post('/api/student_update', auth.ensureApiAuth, (req, res) => {
   var studentUpdates = req.body.studentUpdates;
   var user=req.user;
   studentUpdates.instructor_UN=user.accountId.replace('Local_','')
-  //user.instructor_UN=instructorUsername
+  //validate the inputs from the instructor
+    //validation goes here
+  if(validator.matches(studentUpdates.solution_disabled,/^[a-zA-Z\s]+$/i)==false){
+     return util.apiResponse(req, res, 400, "Invalid Request.Error 1000");
+  }
+  if(validator.isNumeric(studentUpdates.max_progress)==false){
+    return util.apiResponse(req, res, 400, "Invalid Request. Error 1001");
+  }
+  //limiting the inputs from instructor
+  if(studentUpdates.max_progress<1)
+    studentUpdates.max_progress=1;
+    
+  if(studentUpdates.max_progress>6)
+    studentUpdates.max_progress=6;  
 
-  // if(util.isNullOrUndefined(studentUpdates) || validator.matches(studentUpdates,/^[a-z0-9\s_'\-]+$/i)==false){
-  //    return util.apiResponse(req, res, 400, "Invalid Request.");
-  // }
+  if(studentUpdates.solution_disabled!='disabled' || studentUpdates.solution_disabled !='enabled'){
+    studentUpdates.solution_disabled!='disabled';
+  }
+
   //check if the req is from the instructor account
   db.fetchInstructors(null, function(users){  
     for (let i = 0; i < users.length; i++) {
       if (req.user.accountId===users[i].accountId)
       {          
-        //link the student to the instructor
+        //update the student infos
         db.getPromise(db.updateStudent,studentUpdates);
         return util.apiResponse(req, res, 200, "Updated Seccesfully");   
       }

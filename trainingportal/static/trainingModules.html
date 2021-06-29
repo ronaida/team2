@@ -48,7 +48,6 @@
                 <tr>
                     <th>Student Name</th>
                     <th>User Name</th>
-                    <th>Team Name</th>
                     <th>Solution Button</th>
                     <th>Current Belt</th>
                     <th>Max Allowed Belt</th>
@@ -59,7 +58,6 @@
                 <tr ng-repeat="studentEntry in studentsList" >                   
                     <td>{{studentEntry.givenName}} {{studentEntry.familyName}}</td>
                     <td>{{studentEntry.accountId.replace('Local_','')}}</td>
-                    <td>Team name is shown here</td>
                     <td>
                         <select class="form-select"  name="sol_button_disabled" id="sol_button_disabled" > 
                             <option value='disabled' ng-selected="studentEntry.solution_disabled=='disabled' ">Disabled</option>
