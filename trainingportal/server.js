@@ -621,7 +621,7 @@ app.post('/api/student_update', auth.ensureApiAuth, (req, res) => {
     studentUpdates.max_progress=6;  
 
   if(studentUpdates.solution_disabled!='disabled' || studentUpdates.solution_disabled !='enabled'){
-    studentUpdates.solution_disabled!='disabled';
+    studentUpdates.solution_disabled='disabled';
   }
 
   //check if the req is from the instructor account

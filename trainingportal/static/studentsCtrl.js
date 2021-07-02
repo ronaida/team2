@@ -186,9 +186,9 @@ app.controller("studentsCtrl",  ['$rootScope','$http','$location','dataSvc', fun
             //thanks (Osama Ghozlan) => github.com/OMGhozlan for the helping in the two following lines
 
             //get the value of Solution Button	chlidren[3]
-            new_disabled_sloution=document.getElementsByTagName("TR")[index+1].children[3].children[0].value;
+            new_disabled_sloution=document.getElementsByTagName("TR")[index+1].children[2].children[0].value;
             //get the value of Max Allowed Belt	chlidren[5]
-            new_max_limit=document.getElementsByTagName("TR")[index+1].children[5].children[0].value;
+            new_max_limit=document.getElementsByTagName("TR")[index+1].children[4].children[0].value;
 
             //studentUpdates.instructor_UN=$user.accountId.replace('Local_', '')
             studentUpdates.accountId=$scope.studentsList[index].accountId;
