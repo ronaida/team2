@@ -55,8 +55,6 @@ let options = {
   key: key // fs.readFileSync('./ssl/example.key');
 };
 
-var server = https.createServer(options, app);
-
 //INIT
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -728,6 +726,6 @@ process.on('SIGINT', function() {
 //     util.log('Is secure:'+config.dojoUrl.startsWith("https")); 
 // });
 
-var server = https.createServer(options, app).listen(80, function(){
-  console.log("Express server listening on port " + 80);
+var server = https.createServer(options, app).listen(443, function(){
+  console.log("Express server listening on port " + 443);
 });
