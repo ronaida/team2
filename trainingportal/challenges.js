@@ -135,10 +135,6 @@ exports.getUserLevelForModule = async (user,moduleId) => {
     //if  (max_allowed_level_int == permittedLevel)
     //console.log("================== called here============")
     //console.log("passedChallenges"+passedChallenges.challengeId);
-    if (moduleId=='blackBelt'){
-       // console.log("moduleId"+moduleId);
-        return (max_allowed_level_int-1);
-    }
     //console.log("module def"+moduleDefinitions);
     for(let level of moduleDefinitions){
         let passCount = 0;
@@ -163,6 +159,12 @@ exports.getUserLevelForModule = async (user,moduleId) => {
     }
     //console.log("===================")
     //console.log(userLevel);
+
+    if (moduleId=='blackBelt'){
+        // console.log("moduleId"+moduleId);
+        if(userLevel >=(max_allowed_level_int-1))
+         return (max_allowed_level_int-1);
+     }
     return userLevel;
 }
 
