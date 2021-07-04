@@ -42,6 +42,21 @@ var badgeHtml = fs.readFileSync(path.join(__dirname, 'static/badge.html'),'utf8'
 
 
 
+//ssl goes here
+var https = require('https');
+
+const cert = fs.readFileSync(path.join(__dirname, '/certificate.crt'),'utf8');
+const ca = fs.readFileSync(path.join(__dirname, '/ca_bundle.crt'),'utf8');
+const key = fs.readFileSync(path.join(__dirname, '/private.key'),'utf8');
+
+let options = {
+  cert: cert, // fs.readFileSync('./ssl/example.crt');
+  ca: ca, // fs.readFileSync('./ssl/example.ca-bundle');
+  key: key // fs.readFileSync('./ssl/example.key');
+};
+
+var server = https.createServer(options, app);
+
 //INIT
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -707,8 +722,12 @@ process.on('SIGINT', function() {
   process.exit();
 });
 
-app.listen(80,function(){
-    util.log('Listening on 80');
-    util.log('Configured url:'+config.dojoUrl);
-    util.log('Is secure:'+config.dojoUrl.startsWith("https")); 
+// app.listen(80,function(){
+//     util.log('Listening on 80');
+//     util.log('Configured url:'+config.dojoUrl);
+//     util.log('Is secure:'+config.dojoUrl.startsWith("https")); 
+// });
+
+var server = https.createServer(options, app).listen(80, function(){
+  console.log("Express server listening on port " + 80);
 });
