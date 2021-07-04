@@ -726,6 +726,15 @@ process.on('SIGINT', function() {
 //     util.log('Is secure:'+config.dojoUrl.startsWith("https")); 
 // });
 
+// set up a route to redirect http to https
+app.get('*', function(req, res) {  
+    res.redirect('https://' + req.headers.host + req.url);
+
+    // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
+    // res.redirect('https://example.com' + req.url);
+})
+
+
 var server = https.createServer(options, app).listen(443, function(){
   console.log("Express server listening on port " + 443);
 });
