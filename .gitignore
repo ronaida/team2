@@ -3,5 +3,3 @@
 *.pem
 node_modules
 .vscode
-~$*
-trainingportal/server.js
