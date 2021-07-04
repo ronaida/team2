@@ -620,7 +620,7 @@ app.post('/api/student_update', auth.ensureApiAuth, (req, res) => {
   if(studentUpdates.max_progress>6)
     studentUpdates.max_progress=6;  
 
-  if(studentUpdates.solution_disabled!='disabled' || studentUpdates.solution_disabled !='enabled'){
+  if(studentUpdates.solution_disabled!='disabled' && studentUpdates.solution_disabled !='enabled'){
     studentUpdates.solution_disabled='disabled';
   }
 
@@ -707,8 +707,8 @@ process.on('SIGINT', function() {
   process.exit();
 });
 
-app.listen(8081,function(){
-    util.log('Listening on 8081');
+app.listen(80,function(){
+    util.log('Listening on 80');
     util.log('Configured url:'+config.dojoUrl);
     util.log('Is secure:'+config.dojoUrl.startsWith("https")); 
 });
