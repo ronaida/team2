@@ -620,7 +620,7 @@ app.post('/api/student_update', auth.ensureApiAuth, (req, res) => {
   if(studentUpdates.max_progress>6)
     studentUpdates.max_progress=6;  
 
-  if(studentUpdates.solution_disabled!='disabled' || studentUpdates.solution_disabled !='enabled'){
+  if(studentUpdates.solution_disabled!='disabled' && studentUpdates.solution_disabled !='enabled'){
     studentUpdates.solution_disabled='disabled';
   }
 
