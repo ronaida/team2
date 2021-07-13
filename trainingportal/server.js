@@ -52,7 +52,31 @@ const key = fs.readFileSync(path.join(__dirname, '/private.key'),'utf8');
 let options = {
   cert: cert, // fs.readFileSync('./ssl/example.crt');
   ca: ca, // fs.readFileSync('./ssl/example.ca-bundle');
-  key: key // fs.readFileSync('./ssl/example.key');
+  key: key, // fs.readFileSync('./ssl/example.key');
+  ciphers: [
+    'ECDHE-RSA-AES128-GCM-SHA256',
+    'ECDHE-ECDSA-AES128-GCM-SHA256',
+    'ECDHE-RSA-AES256-GCM-SHA384',
+    'ECDHE-ECDSA-AES256-GCM-SHA384',
+    'DHE-RSA-AES128-GCM-SHA256',
+    'ECDHE-RSA-AES128-SHA256',
+    'DHE-RSA-AES128-SHA256',
+    'ECDHE-RSA-AES256-SHA384',
+    'DHE-RSA-AES256-SHA384',
+    'ECDHE-RSA-AES256-SHA256',
+    'DHE-RSA-AES256-SHA256',
+    'HIGH',
+    '!aNULL',
+    '!eNULL',
+    '!EXPORT',
+    '!DES',
+    '!RC4',
+    '!MD5',
+    '!PSK',
+    '!SRP',
+    '!CAMELLIA'
+ ].join(':'),
+ honorCipherOrder: true
 };
 
 //INIT
