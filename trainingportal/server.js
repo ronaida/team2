@@ -212,7 +212,7 @@ app.post( '/public/saml/callback', passport.authenticate( 'saml', {
  
 
 app.post('/public/locallogin', [
-  //auth.checkCaptchaOnLogin,
+  auth.checkCaptchaOnLogin,
   passport.authenticate('local', { failureRedirect: '/public/authFail.html' })
 ],
 function(req, res) {
